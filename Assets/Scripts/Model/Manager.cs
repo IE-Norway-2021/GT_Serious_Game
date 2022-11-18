@@ -23,7 +23,7 @@ public class Manager : MonoBehaviour
     
 
     // create a List with an array of the different tile types
-    public TileType[,,] tilesLoaded = new TileType[,,] { { {0},{0} },{{0},{0}},{{0},{0}} };
+    public TileType[,,] tilesLoaded = new TileType[,,] { { {0},{0},{0},{0} },{{0},{0},{0},{0}},{{0},{0},{0},{0}} };
 
     public List<List<TileStack>> tileStacks = new List<List<TileStack>>();
 
@@ -82,12 +82,20 @@ public class Manager : MonoBehaviour
     }
 
     public void createIsland() {
-        for (int i = 0; i < tileStacks.Count; i++)
+        float x = 0,z = 0;
+        for (int i = 0; i < tileStacks.Count; i++, x+=1.7f)
         {
-            for (int j = 0; j < tileStacks[i].Count; j++)
+            for (int j = 0; j < tileStacks[i].Count; j++, z += 1.5f)
             {
-                createTile(i, j, tileStacks[i][j]);
+                float decalage = 0;
+                if (j%2 == 0){
+                    decalage = 0.4f;
+                } else {
+                    decalage = -0.4f;
+                }
+                createTile(x+decalage, z, tileStacks[i][j]);
             }
+            z = 0;
         }
     }
 
