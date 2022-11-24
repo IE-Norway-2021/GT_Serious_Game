@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
     {
 
         // camera control 
-        inputManager.OnMouseClick += HandleMouseClick;
+        //inputManager.OnMouseClick += HandleMouseClick;
+        tileOnClick.OnTileClick += HandleMouseClick;
 
 
 
@@ -167,9 +168,16 @@ public class GameManager : MonoBehaviour
 
     public InputManager inputManager;
 
-    private void HandleMouseClick(Vector3Int position)
+    public TileOnClick tileOnClick;
+
+    private void HandleMouseClick(GameObject clickedObject)
     {
-        Debug.Log(position);
+        if (clickedObject != null)
+        {
+            Debug.Log("Clicked on " + clickedObject.name);
+            // log position
+            Debug.Log("Position : " + clickedObject.transform.position);
+        }
     }
 
 
