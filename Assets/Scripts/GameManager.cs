@@ -179,9 +179,4 @@ public class GameManager : MonoBehaviour
             Debug.Log("Position : " + clickedObject.transform.position);
         }
     }
-
-
-
-
-
 }
