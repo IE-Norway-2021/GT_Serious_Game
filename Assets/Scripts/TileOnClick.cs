@@ -24,7 +24,8 @@ public class TileOnClick : MonoBehaviour
                 // toggleOutline();
                 if (hit.transform.gameObject.GetComponent<Outline>() != null)
                 {
-                    hit.transform.gameObject.GetComponent<Outline>().enabled = false;
+                    GameObject tile = hit.transform.gameObject;
+                    toggleOutline(tile);
                 }
             }
         }
