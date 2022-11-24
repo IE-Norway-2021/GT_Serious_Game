@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -342,7 +342,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbc2074fa8c44f608275afcdd00014a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSettings: {fileID: 11400000, guid: 078843bd9a2adc146a7370806faf8739, type: 2}
+  waterTilePrefab: {fileID: 8544628135930046623, guid: ba4639e55e3c294438ad183e06d190ff, type: 3}
+  treeTilePrefab: {fileID: 3626037793168173580, guid: eb6438c10fd43694ba29df499082dba0, type: 3}
+  grassTilePrefab: {fileID: 8180149530335123196, guid: ad43f3f86aa951e47ba2d25088e18acd, type: 3}
+  groundTilePrefab: {fileID: 1400212807877390231, guid: f685988d79ed5f34680b1136f56a3163, type: 3}
+  rockTilePrefab: {fileID: 6182826537866291316, guid: c6293c79492e7e4479d90731fc86e807, type: 3}
+  metalTilePrefab: {fileID: 0}
+  goldTilePrefab: {fileID: 0}
+  uraniumTilePrefab: {fileID: 0}
   tileHolder: {fileID: 1092648533}
   cameraMovement: {fileID: 963194229}
   inputManager: {fileID: 1469212967}
