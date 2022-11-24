@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class TileOnClick : MonoBehaviour
 {
 
+    public GameObject selectedTile;
     public Action<GameObject> OnTileClick;
 
     // // Start is called before the first frame update
@@ -42,6 +43,7 @@ public class TileOnClick : MonoBehaviour
 
         // Enable the outline for the clicked tile
         gameobject.GetComponent<Outline>().enabled = true;
+        selectedTile = gameobject;
         OnTileClick?.Invoke(gameobject);
     }
 }

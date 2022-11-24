@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 607548694003469890}
   - component: {fileID: -2862536947944009842}
   - component: {fileID: -6900246058754921628}
+  - component: {fileID: -904783629385357027}
   m_Layer: 0
   m_Name: groundTile
   m_TagString: Tile
@@ -116,3 +117,15 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &-904783629385357027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400212807877390231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8396df5344d3543fdaea3de9dc4afcdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
