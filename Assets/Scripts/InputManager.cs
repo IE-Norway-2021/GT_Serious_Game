@@ -6,14 +6,10 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public Action<Vector3Int> OnMouseClick, OnMouseHold;
-    public Action OnMouseUp;
     private Vector2 cameraMovementVector;
 
     [SerializeField]
     Camera mainCamera;
-
-    public LayerMask groundMask;
 
     public Vector2 CameraMovementVector
     {
@@ -21,14 +17,46 @@ public class InputManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        ChechArrowInput();
-    }
+    // private void Update()
+    // {
+    //     ChechArrowInput();
+    // }
 
 
     private void ChechArrowInput()
     {
         cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
+
+
+    public GameObject cameraOrbit;
+
+    public float rotateSpeed = 8f;
+
+    [SerializeField]
+    public float angleView;
+
+    void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            float h = rotateSpeed * Input.GetAxis("Mouse X");
+            float v = rotateSpeed * Input.GetAxis("Mouse Y");
+
+            if (cameraOrbit.transform.eulerAngles.z + v <= 0.1f || cameraOrbit.transform.eulerAngles.z + v >= 179.9f)
+                v = 0;
+
+            cameraOrbit.transform.eulerAngles = new Vector3(cameraOrbit.transform.eulerAngles.x, cameraOrbit.transform.eulerAngles.y + h, angleView);
+        }
+
+        float scrollFactor = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scrollFactor != 0)
+        {
+            cameraOrbit.transform.localScale = cameraOrbit.transform.localScale * (1f - scrollFactor);
+        }
+
+    }
+
+
 }

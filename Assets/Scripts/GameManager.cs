@@ -6,7 +6,6 @@ The json file contains a 3D array that describes the island using the different 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SVS;
 using System;
 
 public enum TileType
@@ -47,7 +46,13 @@ public class GameManager : MonoBehaviour
 
     private const float TILE_HEIGHT_DEFAULT = 1f;
 
+    // camera control
 
+    public CameraMovement cameraMovement;
+
+    public InputManager inputManager;
+
+    public TileOnClick tileOnClick;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +72,9 @@ public class GameManager : MonoBehaviour
         createIsland();
 
         Debug.Log("Island created");
+        // TODO choose a center tile to set to CameraMovement
+        cameraMovement.Target = tileStacks[0][0].tiles[0].transform;
+        Debug.Log("Camera set, target: " + cameraMovement.Target.position);
     }
 
     // Update is called once per frame
@@ -74,8 +82,6 @@ public class GameManager : MonoBehaviour
     {
         // camera control
         cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
-
-
     }
 
     public void loadIsland()
@@ -128,22 +134,23 @@ public class GameManager : MonoBehaviour
         // stack the tiles depending on the tileStack
         if (tileStack.water)
         {
-            return InstantiateObject(waterTilePrefab, x, 0, z, 4);
+            GameObject tile = InstantiateObject(waterTilePrefab, x, 0, z, 4);
+            tileStack.addTile(tile);
         }
         else
         {
             Debug.Log("Is ground");
             //Couche de base
-            InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6);
+            tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6));
             if (tileStack.ground)
             {
-                InstantiateObject(groundTilePrefab, x, 0, z, 6);
+                tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6));
                 if (tileStack.grass)
                 {
-                    InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6);
+                    tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6));
                     if (tileStack.tree)
                     {
-                        InstantiateObject(treeTilePrefab, x, 1.5f, z, 6);
+                        tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6));
                     }
                 }
             }
@@ -161,14 +168,6 @@ public class GameManager : MonoBehaviour
         return tmpTile;
     }
 
-
-    // camera control
-
-    public CameraMovement cameraMovement;
-
-    public InputManager inputManager;
-
-    public TileOnClick tileOnClick;
 
     private void HandleMouseClick(GameObject clickedObject)
     {

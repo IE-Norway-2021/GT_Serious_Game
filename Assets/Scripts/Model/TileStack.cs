@@ -3,10 +3,14 @@ Class tile
 TODO
 */
 
-
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class TileStack
 {
+
+    public List<GameObject> tiles = new List<GameObject>();
 
     public bool water;
     public bool tree;
@@ -52,6 +56,12 @@ public class TileStack
                     break;
             }
         }
+
+    }
+
+    public void addTile(GameObject tile)
+    {
+        tiles.Add(tile);
     }
 
     public override string ToString()
@@ -60,6 +70,6 @@ public class TileStack
         {
             return "This is some good water";
         }
-        return "No watel fol you my fliend";
+        return "No water";
     }
 }
