@@ -29,6 +29,14 @@ public class TileOnClick : MonoBehaviour
 
     void toggleOutline(GameObject gameobject)
     {
-        gameobject.GetComponent<Outline>().enabled = !gameobject.GetComponent<Outline>().enabled;
+        // Disable the outline for all tiles
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        foreach (GameObject tile in tiles)
+        {
+            tile.GetComponent<Outline>().enabled = false;
+        }
+
+        // Enable the outline for the clicked tile
+        gameobject.GetComponent<Outline>().enabled = true;
     }
 }
