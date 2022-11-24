@@ -34,7 +34,14 @@ public class GameManager : MonoBehaviour
 
     public List<List<TileStack>> tileStacks = new List<List<TileStack>>();
 
-    public GameSettings gameSettings;
+    public GameObject waterTilePrefab;
+    public GameObject treeTilePrefab;
+    public GameObject grassTilePrefab;
+    public GameObject groundTilePrefab;
+    public GameObject rockTilePrefab;
+    public GameObject metalTilePrefab;
+    public GameObject goldTilePrefab;
+    public GameObject uraniumTilePrefab;
 
     public Transform tileHolder;
 
@@ -120,22 +127,22 @@ public class GameManager : MonoBehaviour
         // stack the tiles depending on the tileStack
         if (tileStack.water)
         {
-            return InstantiateObject(gameSettings.waterTilePrefab, x, 0, z, 6);
+            return InstantiateObject(waterTilePrefab, x, 0, z, 6);
         }
         else
         {
             Debug.Log("Is ground");
             //Couche de base
-            InstantiateObject(gameSettings.rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 0);
+            InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 0);
             if (tileStack.ground)
             {
-                InstantiateObject(gameSettings.groundTilePrefab, x, 0, z, 1);
+                InstantiateObject(groundTilePrefab, x, 0, z, 1);
                 if (tileStack.grass)
                 {
-                    InstantiateObject(gameSettings.grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 1);
+                    InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 1);
                     if (tileStack.tree)
                     {
-                        InstantiateObject(gameSettings.treeTilePrefab, x, 1.5f, z, 1);
+                        InstantiateObject(treeTilePrefab, x, 1.5f, z, 1);
                     }
                 }
             }
