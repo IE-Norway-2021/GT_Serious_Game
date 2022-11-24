@@ -14,16 +14,21 @@ public class TileOnClick : MonoBehaviour
     // // Update is called once per frame
     void Update()
     {
-    if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                GameObject tile = hit.transform.gameObject;
+                toggleOutline(tile);
+            }
+        }
+    }
+
+    void toggleOutline(GameObject gameobject)
     {
-         Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-         RaycastHit hit;
-         
-         if (Physics.Raycast(ray, out hit, 100))
-         {
-            // toggleOutline();
-             hit.transform.gameObject.GetComponent<Outline>().enabled = false;
-         }
-     }
+        gameobject.GetComponent<Outline>().enabled = !gameobject.GetComponent<Outline>().enabled;
     }
 }
