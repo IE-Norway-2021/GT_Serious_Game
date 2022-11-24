@@ -127,22 +127,22 @@ public class GameManager : MonoBehaviour
         // stack the tiles depending on the tileStack
         if (tileStack.water)
         {
-            return InstantiateObject(waterTilePrefab, x, 0, z, 6);
+            return InstantiateObject(waterTilePrefab, x, 0, z, 4);
         }
         else
         {
             Debug.Log("Is ground");
             //Couche de base
-            InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 0);
+            InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6);
             if (tileStack.ground)
             {
-                InstantiateObject(groundTilePrefab, x, 0, z, 1);
+                InstantiateObject(groundTilePrefab, x, 0, z, 6);
                 if (tileStack.grass)
                 {
-                    InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 1);
+                    InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6);
                     if (tileStack.tree)
                     {
-                        InstantiateObject(treeTilePrefab, x, 1.5f, z, 1);
+                        InstantiateObject(treeTilePrefab, x, 1.5f, z, 6);
                     }
                 }
             }
