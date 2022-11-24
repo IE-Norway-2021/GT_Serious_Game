@@ -21,7 +21,8 @@ public class TileOnClick : MonoBehaviour
          
          if (Physics.Raycast(ray, out hit, 100))
          {
-             Debug.Log( hit.transform.gameObject.name );
+            // toggleOutline();
+             hit.transform.gameObject.GetComponent<Outline>().enabled = false;
          }
      }
     }
