@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe58085442e096845a2b103c70360208, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  waterTilePrefab: {fileID: 8544628135930046623, guid: ba4639e55e3c294438ad183e06d190ff, type: 3}
+  treeTilePrefab: {fileID: 3626037793168173580, guid: eb6438c10fd43694ba29df499082dba0, type: 3}
+  grassTilePrefab: {fileID: 8180149530335123196, guid: ad43f3f86aa951e47ba2d25088e18acd, type: 3}
+  groundTilePrefab: {fileID: 1400212807877390231, guid: f685988d79ed5f34680b1136f56a3163, type: 3}
+  rockTilePrefab: {fileID: 6182826537866291316, guid: c6293c79492e7e4479d90731fc86e807, type: 3}
+  metalTilePrefab: {fileID: 6182826537866291316, guid: c6293c79492e7e4479d90731fc86e807, type: 3}
+  goldTilePrefab: {fileID: 0}
+  uraniumTilePrefab: {fileID: 0}
+  tileHolder: {fileID: 0}

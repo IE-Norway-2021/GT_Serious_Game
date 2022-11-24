@@ -21,47 +21,60 @@ public class InputManager : MonoBehaviour
     }
 
 
-    private void Update() {
+    private void Update()
+    {
         CheckClickDownnEvent();
         CheckClickUpEvent();
         CheckClickHoldEvent();
         ChechArrowInput();
     }
 
-    private Vector3Int? RaycastGround() {
+    private Vector3Int? RaycastGround()
+    {
         RaycastHit hit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+        {
             return new Vector3Int((int)hit.point.x, (int)hit.point.y, (int)hit.point.z);
         }
         return null;
     }
 
-    private void CheckClickDownnEvent() {
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
+    private void CheckClickDownnEvent()
+    {
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        {
             var position = RaycastGround();
-            if (position != null) {
+            if (position != null)
+            {
+                //TODO c'est ici que ça devrait aller si on a le click sur une tuile
                 OnMouseClick?.Invoke(position.Value);
             }
         }
     }
-    
-    private void CheckClickUpEvent() {
-        if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) {
+
+    private void CheckClickUpEvent()
+    {
+        if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        {
             OnMouseUp?.Invoke();
         }
     }
 
-    private void CheckClickHoldEvent() {
-        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false) {
+    private void CheckClickHoldEvent()
+    {
+        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        {
             var position = RaycastGround();
-            if (position != null) {
+            if (position != null)
+            {
                 OnMouseHold?.Invoke(position.Value);
             }
         }
     }
 
-    private void ChechArrowInput() {
+    private void ChechArrowInput()
+    {
         cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 }
