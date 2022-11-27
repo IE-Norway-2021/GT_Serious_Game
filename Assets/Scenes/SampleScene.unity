@@ -352,10 +352,9 @@ MonoBehaviour:
   uraniumTilePrefab: {fileID: 0}
   volcanoTilePrefab: {fileID: 7134424643256078547, guid: 0d2f910143ac25b40a3b33782bab0003, type: 3}
   tileHolder: {fileID: 1092648533}
-  cameraMovement: {fileID: 963194229}
   inputManager: {fileID: 1469212967}
   tileOnClick: {fileID: 1347132835}
-  mapData: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
+  gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
 --- !u!4 &363042991
 Transform:
   m_ObjectHideFlags: 0
@@ -476,7 +475,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
@@ -543,30 +541,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1430494173}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32cad736041164443a0261e538bf4471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameCamera: {fileID: 963194227}
-  cameraMovementSpeed: 5
-  Target: {fileID: 0}
-  cameraOrbit: {fileID: 1430494173}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +793,7 @@ Transform:
   m_GameObject: {fileID: 1430494169}
   m_LocalRotation: {x: 0, y: 0, z: 0.0008726948, w: 0.99999964}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
@@ -904,10 +886,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f212e1bc2f4bd4895cc12493e564b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 963194227}
   cameraOrbit: {fileID: 1430494169}
-  rotateSpeed: 8
-  angleView: 50
+  Target: {x: 0, y: 0, z: 0}
+  gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
 --- !u!4 &1469212968
 Transform:
   m_ObjectHideFlags: 0

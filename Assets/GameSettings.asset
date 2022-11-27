@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e27fbba9c2190418070a1b34bd176c, type: 3}
-  m_Name: GameMap
+  m_Name: GameSettings
   m_EditorClassIdentifier: 
   XLimit: 80
   ZLimit: 80
@@ -18,3 +18,8 @@ MonoBehaviour:
   VolcanoHeight: 10
   IslandRadius: 25
   TreeProbability: 50
+  MineralProbability: 50
+  zoomMax: 0
+  zoomMin: 0
+  rotateSpeed: 8
+  angleView: 30

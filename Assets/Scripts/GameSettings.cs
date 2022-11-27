@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New Map", menuName = "Map")]
-public class MapData : ScriptableObject
+public class GameSettings : ScriptableObject
 {
 
     //
@@ -28,4 +28,11 @@ public class MapData : ScriptableObject
     public int TreeProbability;
 
     public int MineralProbability;
+
+    [Header("Camera Settings")]
+
+    public float zoomMax;
+    public float zoomMin;
+    public float rotateSpeed = 8f;
+    public float angleView;
 }

@@ -6,47 +6,54 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    private Vector2 cameraMovementVector;
+    // private Vector2 cameraMovementVector;
 
-    [SerializeField]
-    Camera mainCamera;
+    // [SerializeField]
+    // Camera mainCamera;
 
-    public Vector2 CameraMovementVector
-    {
-        get { return cameraMovementVector; }
-    }
-
-
-    // private void Update()
+    // public Vector2 CameraMovementVector
     // {
-    //     ChechArrowInput();
+    //     get { return cameraMovementVector; }
     // }
 
 
-    private void ChechArrowInput()
-    {
-        cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    }
+    // // private void Update()
+    // // {
+    // //     ChechArrowInput();
+    // // }
+
+
+    // private void ChechArrowInput()
+    // {
+    //     cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    // }
 
 
     public GameObject cameraOrbit;
 
-    public float rotateSpeed = 8f;
+    public Vector3 Target;
 
-    [SerializeField]
-    public float angleView;
+    public GameSettings gameSettings;
+
+    void Start()
+    {
+        cameraOrbit.transform.position = Target;
+    }
 
     void Update()
     {
+        // TODO : ajouter le fait de pouvoir zoom sur les bords de la map, et de mettre un zoom minimal par défaut et max
+
+        // Gestion camera
         if (Input.GetMouseButton(0))
         {
-            float h = rotateSpeed * Input.GetAxis("Mouse X");
-            float v = rotateSpeed * Input.GetAxis("Mouse Y");
+            float h = gameSettings.rotateSpeed * Input.GetAxis("Mouse X");
+            float v = gameSettings.rotateSpeed * Input.GetAxis("Mouse Y");
 
             if (cameraOrbit.transform.eulerAngles.z + v <= 0.1f || cameraOrbit.transform.eulerAngles.z + v >= 179.9f)
                 v = 0;
 
-            cameraOrbit.transform.eulerAngles = new Vector3(cameraOrbit.transform.eulerAngles.x, cameraOrbit.transform.eulerAngles.y + h, angleView);
+            cameraOrbit.transform.eulerAngles = new Vector3(cameraOrbit.transform.eulerAngles.x, cameraOrbit.transform.eulerAngles.y + h, cameraOrbit.transform.eulerAngles.z + v);
         }
 
         float scrollFactor = Input.GetAxis("Mouse ScrollWheel");

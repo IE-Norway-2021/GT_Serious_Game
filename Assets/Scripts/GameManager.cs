@@ -44,13 +44,11 @@ public class GameManager : MonoBehaviour
 
     // camera control
 
-    public CameraMovement cameraMovement;
-
     public InputManager inputManager;
 
     public TileOnClick tileOnClick;
 
-    public MapData mapData;
+    public GameSettings gameSettings;
 
     // Start is called before the first frame update
     void Start()
@@ -77,19 +75,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // camera control
-        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
     }
 
     // Generates a random map of TileStacks
     public void GenerateMap()
     {
         // Create an list of tile stacks using the dims in the mapData
-        float x = (mapData.XLimit / 2) * -TILE_X_DEFAULT, z = (mapData.ZLimit / 2) * -TILE_Z_DEFAULT;
-        for (int i = 0; i < mapData.XLimit; i++, x += TILE_X_DEFAULT)
+        float x = (gameSettings.XLimit / 2) * -TILE_X_DEFAULT, z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
+        for (int i = 0; i < gameSettings.XLimit; i++, x += TILE_X_DEFAULT)
         {
             tileStacks.Add(new List<TileStack>());
-            for (int j = 0; j < mapData.ZLimit; j++, z += TILE_Z_DEFAULT)
+            for (int j = 0; j < gameSettings.ZLimit; j++, z += TILE_Z_DEFAULT)
             {
                 float decalage = 0;
                 if (j % 2 == 0)
@@ -102,15 +98,15 @@ public class GameManager : MonoBehaviour
                 }
                 tileStacks[i].Add(new TileStack(x + decalage, z));
             }
-            z = (mapData.ZLimit / 2) * -TILE_Z_DEFAULT;
+            z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
         }
 
 
         // handle the volcano
-        float VolcanoXLimit = mapData.VolcanoRadius * TILE_X_DEFAULT, VolcanoZLimit = mapData.VolcanoRadius * TILE_Z_DEFAULT;
-        for (int i = 0; i < mapData.XLimit; i++)
+        float VolcanoXLimit = gameSettings.VolcanoRadius * TILE_X_DEFAULT, VolcanoZLimit = gameSettings.VolcanoRadius * TILE_Z_DEFAULT;
+        for (int i = 0; i < gameSettings.XLimit; i++)
         {
-            for (int j = 0; j < mapData.ZLimit; j++)
+            for (int j = 0; j < gameSettings.ZLimit; j++)
             {
                 float decalage = 0;
                 if (j % 2 == 0)
@@ -134,10 +130,10 @@ public class GameManager : MonoBehaviour
 
 
         // handle the water
-        float IslandXLimit = mapData.IslandRadius * TILE_X_DEFAULT, IslandZLimit = mapData.IslandRadius * TILE_Z_DEFAULT;
-        for (int i = 0; i < mapData.XLimit; i++)
+        float IslandXLimit = gameSettings.IslandRadius * TILE_X_DEFAULT, IslandZLimit = gameSettings.IslandRadius * TILE_Z_DEFAULT;
+        for (int i = 0; i < gameSettings.XLimit; i++)
         {
-            for (int j = 0; j < mapData.ZLimit; j++)
+            for (int j = 0; j < gameSettings.ZLimit; j++)
             {
                 float decalage = 0;
                 if (j % 2 == 0)
@@ -156,19 +152,19 @@ public class GameManager : MonoBehaviour
         }
 
         // handle the rest
-        for (int i = 0; i < mapData.XLimit; i++)
+        for (int i = 0; i < gameSettings.XLimit; i++)
         {
-            for (int j = 0; j < mapData.ZLimit; j++)
+            for (int j = 0; j < gameSettings.ZLimit; j++)
             {
                 if (!tileStacks[i][j].water && !tileStacks[i][j].volcano && !tileStacks[i][j].volcanoBorder)
                 {
                     tileStacks[i][j].ground = true;
                     tileStacks[i][j].grass = true;
-                    if (UnityEngine.Random.Range(0, 100) < mapData.TreeProbability)
+                    if (UnityEngine.Random.Range(0, 100) < gameSettings.TreeProbability)
                     {
                         tileStacks[i][j].tree = true;
                     }
-                    if (UnityEngine.Random.Range(0, 100) < mapData.MineralProbability)
+                    if (UnityEngine.Random.Range(0, 100) < gameSettings.MineralProbability)
                     {
                         int mineral = UnityEngine.Random.Range(0, 100) % 6;
                         switch (mineral)
@@ -243,14 +239,14 @@ public class GameManager : MonoBehaviour
         }
         else if (tileStack.volcano)
         {
-            for (int i = 0; i < mapData.VolcanoHeight - 1; i++)
+            for (int i = 0; i < gameSettings.VolcanoHeight - 1; i++)
             {
                 tileStack.addTile(InstantiateObject(volcanoTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
             }
         }
         else if (tileStack.volcanoBorder)
         {
-            for (int i = 0; i < mapData.VolcanoHeight; i++)
+            for (int i = 0; i < gameSettings.VolcanoHeight; i++)
             {
                 tileStack.addTile(InstantiateObject(rockTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
             }
