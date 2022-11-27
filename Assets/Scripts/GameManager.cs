@@ -23,14 +23,6 @@ public enum TileType
 
 public class GameManager : MonoBehaviour
 {
-
-
-    // create a List with an array of the different tile types
-    public TileType[,,] tilesLoaded = new TileType[,,] { { { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none } },
-    { { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none } },
-    { { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none }, { TileType.water,TileType.none,TileType.none,TileType.none } },
-    { { TileType.rock, TileType.ground, TileType.grass,TileType.tree }, { TileType.rock,TileType.ground,TileType.none,TileType.none }, { TileType.rock,TileType.ground,TileType.none,TileType.none }, { TileType.rock,TileType.ground,TileType.none,TileType.none } } };
-
     public List<List<TileStack>> tileStacks = new List<List<TileStack>>();
 
     public GameObject waterTilePrefab;
@@ -41,10 +33,14 @@ public class GameManager : MonoBehaviour
     public GameObject metalTilePrefab;
     public GameObject goldTilePrefab;
     public GameObject uraniumTilePrefab;
+    public GameObject volcanoTilePrefab;
 
     public Transform tileHolder;
 
     private const float TILE_HEIGHT_DEFAULT = 1f;
+    private const float TILE_X_DEFAULT = 1.7f;
+    private const float TILE_Z_DEFAULT = 1.5f;
+    private const float TILE_X_OFFSET = 0.4f;
 
     // camera control
 
@@ -53,6 +49,8 @@ public class GameManager : MonoBehaviour
     public InputManager inputManager;
 
     public TileOnClick tileOnClick;
+
+    public MapData mapData;
 
     // Start is called before the first frame update
     void Start()
@@ -65,16 +63,15 @@ public class GameManager : MonoBehaviour
 
 
         Debug.Log("Start");
-        loadIsland();
+        GenerateMap();
 
-        Debug.Log("TileStacks created");
-
-        createIsland();
+        InstantiateIsland();
 
         Debug.Log("Island created");
-        // TODO choose a center tile to set to CameraMovement
-        cameraMovement.Target = tileStacks[0][0].tiles[0].transform;
-        Debug.Log("Camera set, target: " + cameraMovement.Target.position);
+        // Set center to position 0,0,0 of the map
+        //tileHolder.position = new Vector3(-tileStacks.Count * TILE_X_DEFAULT / 2, 0, -tileStacks[0].Count * TILE_Z_DEFAULT / 2);
+        tileHolder.position = new Vector3(0, 0, 0);
+
     }
 
     // Update is called once per frame
@@ -84,75 +81,178 @@ public class GameManager : MonoBehaviour
         cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
     }
 
-    public void loadIsland()
+    // Generates a random map of TileStacks
+    public void GenerateMap()
     {
-        //Load json file
-        //TODO
-
-        //Create the tile stacks from the tiles loaded
-        for (int x = 0; x < tilesLoaded.GetLength(0); x++)
+        // Create an list of tile stacks using the dims in the mapData
+        float x = (mapData.XLimit / 2) * -TILE_X_DEFAULT, z = (mapData.ZLimit / 2) * -TILE_Z_DEFAULT;
+        for (int i = 0; i < mapData.XLimit; i++, x += TILE_X_DEFAULT)
         {
             tileStacks.Add(new List<TileStack>());
-            for (int y = 0; y < tilesLoaded.GetLength(1); y++)
-            {
-                //create a 1D array of the TileType in position x,y
-                TileType[] tmp = new TileType[tilesLoaded.GetLength(2)];
-                for (int z = 0; z < tilesLoaded.GetLength(2); z++)
-                {
-                    tmp[z] = tilesLoaded[x, y, z];
-                }
-                tileStacks[x].Add(new TileStack(tmp));
-
-            }
-        }
-    }
-
-    public void createIsland()
-    {
-        float x = 0, z = 0;
-        for (int i = 0; i < tileStacks.Count; i++, x += 1.7f)
-        {
-            for (int j = 0; j < tileStacks[i].Count; j++, z += 1.5f)
+            for (int j = 0; j < mapData.ZLimit; j++, z += TILE_Z_DEFAULT)
             {
                 float decalage = 0;
                 if (j % 2 == 0)
                 {
-                    decalage = 0.4f;
+                    decalage = TILE_X_OFFSET;
                 }
                 else
                 {
-                    decalage = -0.4f;
+                    decalage = -TILE_X_OFFSET;
                 }
-                createTile(x + decalage, z, tileStacks[i][j]);
+                tileStacks[i].Add(new TileStack(x + decalage, z));
             }
-            z = 0;
+            z = (mapData.ZLimit / 2) * -TILE_Z_DEFAULT;
+        }
+
+
+        // handle the volcano
+        float VolcanoXLimit = mapData.VolcanoRadius * TILE_X_DEFAULT, VolcanoZLimit = mapData.VolcanoRadius * TILE_Z_DEFAULT;
+        for (int i = 0; i < mapData.XLimit; i++)
+        {
+            for (int j = 0; j < mapData.ZLimit; j++)
+            {
+                float decalage = 0;
+                if (j % 2 == 0)
+                {
+                    decalage = TILE_X_OFFSET;
+                }
+                else
+                {
+                    decalage = -TILE_X_OFFSET;
+                }
+                if (isOnCircleBorder(tileStacks[i][j].x, tileStacks[i][j].z, VolcanoXLimit + decalage, VolcanoZLimit))
+                {
+                    tileStacks[i][j].volcanoBorder = true;
+                }
+                else if (isInCircle(tileStacks[i][j].x, tileStacks[i][j].z, VolcanoXLimit + decalage, VolcanoZLimit))
+                {
+                    tileStacks[i][j].volcano = true;
+                }
+            }
+        }
+
+
+        // handle the water
+        float IslandXLimit = mapData.IslandRadius * TILE_X_DEFAULT, IslandZLimit = mapData.IslandRadius * TILE_Z_DEFAULT;
+        for (int i = 0; i < mapData.XLimit; i++)
+        {
+            for (int j = 0; j < mapData.ZLimit; j++)
+            {
+                float decalage = 0;
+                if (j % 2 == 0)
+                {
+                    decalage = TILE_X_OFFSET;
+                }
+                else
+                {
+                    decalage = -TILE_X_OFFSET;
+                }
+                if (!isInCircle(tileStacks[i][j].x, tileStacks[i][j].z, IslandXLimit + decalage, IslandZLimit))
+                {
+                    tileStacks[i][j].water = true;
+                }
+            }
+        }
+
+        // handle the rest
+        for (int i = 0; i < mapData.XLimit; i++)
+        {
+            for (int j = 0; j < mapData.ZLimit; j++)
+            {
+                if (!tileStacks[i][j].water && !tileStacks[i][j].volcano && !tileStacks[i][j].volcanoBorder)
+                {
+                    tileStacks[i][j].ground = true;
+                    tileStacks[i][j].grass = true;
+                    if (UnityEngine.Random.Range(0, 100) < mapData.TreeProbability)
+                    {
+                        tileStacks[i][j].tree = true;
+                    }
+                    if (UnityEngine.Random.Range(0, 100) < mapData.MineralProbability)
+                    {
+                        int mineral = UnityEngine.Random.Range(0, 100) % 6;
+                        switch (mineral)
+                        {
+                            case 0:
+                            case 1:
+                            case 2:
+                                tileStacks[i][j].metal = true;
+                                break;
+                            case 3:
+                            case 4:
+                                tileStacks[i][j].gold = true;
+                                break;
+                            case 5:
+                                tileStacks[i][j].uranium = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private bool isInCircle(float x, float z, float xLimit, float zLimit)
+    {
+        return (x * x) / (xLimit * xLimit) + (z * z) / (zLimit * zLimit) < 2;
+    }
+
+    private bool isOnCircleBorder(float x, float z, float xLimit, float zLimit)
+    {
+        float value = (x * x) / (xLimit * xLimit) + (z * z) / (zLimit * zLimit);
+        return value >= 1.8 && value <= 2.6;
+    }
+
+    // Instantiates the map
+    public void InstantiateIsland()
+    {
+        for (int i = 0; i < tileStacks.Count; i++)
+        {
+            for (int j = 0; j < tileStacks[i].Count; j++)
+            {
+                createTile(tileStacks[i][j].x, tileStacks[i][j].z, tileStacks[i][j]);
+            }
         }
     }
 
     private GameObject createTile(float x, float z, TileStack tileStack)
     {
+        //Couche de base
+        tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6));
         // stack the tiles depending on the tileStack
         if (tileStack.water)
         {
             GameObject tile = InstantiateObject(waterTilePrefab, x, 0, z, 4);
             tileStack.addTile(tile);
         }
-        else
+        else if (tileStack.ground)
         {
             Debug.Log("Is ground");
-            //Couche de base
-            tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6));
-            if (tileStack.ground)
+            // TODO : add minerals
+            tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6));
+            if (tileStack.grass)
             {
-                tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6));
-                if (tileStack.grass)
+                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6));
+                if (tileStack.tree)
                 {
-                    tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6));
-                    if (tileStack.tree)
-                    {
-                        tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6));
-                    }
+                    tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6));
                 }
+            }
+        }
+        else if (tileStack.volcano)
+        {
+            for (int i = 0; i < mapData.VolcanoHeight - 1; i++)
+            {
+                tileStack.addTile(InstantiateObject(volcanoTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
+            }
+        }
+        else if (tileStack.volcanoBorder)
+        {
+            for (int i = 0; i < mapData.VolcanoHeight; i++)
+            {
+                tileStack.addTile(InstantiateObject(rockTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
             }
         }
         return null;
@@ -178,4 +278,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Position : " + clickedObject.transform.position);
         }
     }
+
+
+
+
 }

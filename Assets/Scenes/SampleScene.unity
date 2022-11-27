@@ -350,10 +350,12 @@ MonoBehaviour:
   metalTilePrefab: {fileID: 0}
   goldTilePrefab: {fileID: 0}
   uraniumTilePrefab: {fileID: 0}
+  volcanoTilePrefab: {fileID: 7134424643256078547, guid: 0d2f910143ac25b40a3b33782bab0003, type: 3}
   tileHolder: {fileID: 1092648533}
   cameraMovement: {fileID: 963194229}
   inputManager: {fileID: 1469212967}
   tileOnClick: {fileID: 1347132835}
+  mapData: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
 --- !u!4 &363042991
 Transform:
   m_ObjectHideFlags: 0
@@ -577,6 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f455ae4deb8f49159b43d882bd5b5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedTile: {fileID: 0}
 --- !u!1001 &1020105942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -702,6 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f455ae4deb8f49159b43d882bd5b5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedTile: {fileID: 0}
 --- !u!4 &1347132836
 Transform:
   m_ObjectHideFlags: 0

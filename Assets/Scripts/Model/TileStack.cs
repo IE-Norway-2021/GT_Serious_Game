@@ -1,14 +1,19 @@
 /*
 Class tile
-TODO
 */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 public class TileStack
 {
+
+    // Map position
+    public float x;
+    public float z;
 
     public List<GameObject> tiles = new List<GameObject>();
 
@@ -21,42 +26,14 @@ public class TileStack
     public bool metal;
     public bool gold;
     public bool uranium;
+    public bool volcano;
+    public bool volcanoBorder;
 
-    public TileStack(TileType[] tilesType)
+    public TileStack(float x, float z)
     {
-        for (int i = 0; i < tilesType.Length; i++)
-        {
-            switch (tilesType[i])
-            {
-                case TileType.water:
-                    water = true;
-                    break;
-                case TileType.tree:
-                    tree = true;
-                    break;
-                case TileType.grass:
-                    grass = true;
-                    break;
-                case TileType.ground:
-                    ground = true;
-                    break;
-                case TileType.rock:
-                    rock = true;
-                    break;
-                case TileType.metal:
-                    metal = true;
-                    break;
-                case TileType.gold:
-                    gold = true;
-                    break;
-                case TileType.uranium:
-                    uranium = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        this.x = x;
+        this.z = z;
+        rock = true;
     }
 
     public void addTile(GameObject tile)
