@@ -2,4 +2,4 @@
 
 ## Description
 
-Serious game project
+Serious game project GT course
