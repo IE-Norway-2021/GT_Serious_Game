@@ -2,4 +2,4 @@
 
 ## Description
 
-Serious game project GT course
+Serious game project GT course 2022-2023
