@@ -18,8 +18,32 @@ public enum TileType
     metal = 5,
     gold = 6,
     uranium = 7,
-    none = 8
+    none = 8,
+    volcano = 9,
+    volcanoBorder = 10,
+    // Buildings
+    metalMine = 11,
+    goldMine = 12,
+    uraniumMine = 13,
+    nuclearPlant = 14,
+    pipeline = 15,
+    hotel = 16,
 };
+
+public enum UserActionType
+{
+    none = 0,
+    cutTree = 1,
+    removeGrass = 2,
+    digGround = 3,
+    buildMetalMine = 4,
+    buildGoldMine = 5,
+    buildUraniumMine = 6,
+    buildNuclearPlant = 7,
+    buildPipeline = 8,
+    buildHotel = 9,
+};
+
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +58,11 @@ public class GameManager : MonoBehaviour
     public GameObject goldTilePrefab;
     public GameObject uraniumTilePrefab;
     public GameObject volcanoTilePrefab;
+    public GameObject metalMineTilePrefab;
+    public GameObject goldMineTilePrefab;
+    public GameObject uraniumMineTilePrefab;
+    public GameObject nuclearPlantTilePrefab;
+    public GameObject pipelineTilePrefab;
 
     public Transform tileHolder;
 
@@ -49,6 +78,34 @@ public class GameManager : MonoBehaviour
     public TileOnClick tileOnClick;
 
     public GameSettings gameSettings;
+
+    // Action management
+
+    public UserActionType currentAction = UserActionType.none;
+
+    // Counters for all the resources and various other things
+
+    // Resources : 
+
+    public long metalCount = 0;
+
+    public long goldCount = 0;
+
+    public long uraniumCount = 0;
+
+    // Buildings :
+
+    public long metalMineCount = 0;
+    public long goldMineCount = 0;
+    public long uraniumMineCount = 0;
+    public long nuclearPlantCount = 0;
+    public long pipelineCount = 0;
+
+    // CO2 related :
+
+    public long co2Count = 0;
+
+    public long treeCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -119,11 +176,11 @@ public class GameManager : MonoBehaviour
                 }
                 if (isOnCircleBorder(tileStacks[i][j].x, tileStacks[i][j].z, VolcanoXLimit + decalage, VolcanoZLimit))
                 {
-                    tileStacks[i][j].volcanoBorder = true;
+                    tileStacks[i][j].volcanoBorder.exists = true;
                 }
                 else if (isInCircle(tileStacks[i][j].x, tileStacks[i][j].z, VolcanoXLimit + decalage, VolcanoZLimit))
                 {
-                    tileStacks[i][j].volcano = true;
+                    tileStacks[i][j].volcano.exists = true;
                 }
             }
         }
@@ -146,7 +203,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (!isInCircle(tileStacks[i][j].x, tileStacks[i][j].z, IslandXLimit + decalage, IslandZLimit))
                 {
-                    tileStacks[i][j].water = true;
+                    tileStacks[i][j].water.exists = true;
                 }
             }
         }
@@ -156,13 +213,14 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < gameSettings.ZLimit; j++)
             {
-                if (!tileStacks[i][j].water && !tileStacks[i][j].volcano && !tileStacks[i][j].volcanoBorder)
+                if (!tileStacks[i][j].water.exists && !tileStacks[i][j].volcano.exists && !tileStacks[i][j].volcanoBorder.exists)
                 {
-                    tileStacks[i][j].ground = true;
-                    tileStacks[i][j].grass = true;
+                    tileStacks[i][j].ground.exists = true;
+                    tileStacks[i][j].grass.exists = true;
                     if (UnityEngine.Random.Range(0, 100) < gameSettings.TreeProbability)
                     {
-                        tileStacks[i][j].tree = true;
+                        tileStacks[i][j].tree.exists = true;
+                        ++treeCount;
                     }
                     if (UnityEngine.Random.Range(0, 100) < gameSettings.MineralProbability)
                     {
@@ -172,14 +230,14 @@ public class GameManager : MonoBehaviour
                             case 0:
                             case 1:
                             case 2:
-                                tileStacks[i][j].metal = true;
+                                tileStacks[i][j].metal.exists = true;
                                 break;
                             case 3:
                             case 4:
-                                tileStacks[i][j].gold = true;
+                                tileStacks[i][j].gold.exists = true;
                                 break;
                             case 5:
-                                tileStacks[i][j].uranium = true;
+                                tileStacks[i][j].uranium.exists = true;
                                 break;
                             default:
                                 break;
@@ -216,39 +274,39 @@ public class GameManager : MonoBehaviour
     private GameObject createTile(float x, float z, TileStack tileStack)
     {
         //Couche de base
-        tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6));
+        tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6), TileType.rock);
         // stack the tiles depending on the tileStack
-        if (tileStack.water)
+        if (tileStack.water.exists)
         {
             GameObject tile = InstantiateObject(waterTilePrefab, x, 0, z, 4);
-            tileStack.addTile(tile);
+            tileStack.addTile(tile, TileType.water);
         }
-        else if (tileStack.ground)
+        else if (tileStack.ground.exists)
         {
             Debug.Log("Is ground");
             // TODO : add minerals
-            tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6));
-            if (tileStack.grass)
+            tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6), TileType.ground);
+            if (tileStack.grass.exists)
             {
-                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6));
-                if (tileStack.tree)
+                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6), TileType.grass);
+                if (tileStack.tree.exists)
                 {
-                    tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6));
+                    tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6), TileType.tree);
                 }
             }
         }
-        else if (tileStack.volcano)
+        else if (tileStack.volcano.exists)
         {
             for (int i = 0; i < gameSettings.VolcanoHeight - 1; i++)
             {
-                tileStack.addTile(InstantiateObject(volcanoTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
+                tileStack.addTile(InstantiateObject(volcanoTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6), TileType.volcano);
             }
         }
-        else if (tileStack.volcanoBorder)
+        else if (tileStack.volcanoBorder.exists)
         {
             for (int i = 0; i < gameSettings.VolcanoHeight; i++)
             {
-                tileStack.addTile(InstantiateObject(rockTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6));
+                tileStack.addTile(InstantiateObject(rockTilePrefab, x, i * TILE_HEIGHT_DEFAULT, z, 6), TileType.volcanoBorder);
             }
         }
         return null;
@@ -267,15 +325,205 @@ public class GameManager : MonoBehaviour
 
     private void HandleMouseClick(GameObject clickedObject)
     {
-        if (clickedObject != null)
+        TileStack tileStack = getTileStackFromPosition(clickedObject.transform.position);
+        if (tileStack == null)
         {
-            Debug.Log("Clicked on " + clickedObject.name);
-            // log position
-            Debug.Log("Position : " + clickedObject.transform.position);
+            Debug.Log("No tileStack found, panic now");
+        }
+        else
+        {
+            // Do action depending on the button clicked
+            handleAction(tileStack);
+
+            // highlight the tile
+            toggleOutline(tileStack);
         }
     }
 
+    private TileStack getTileStackFromPosition(Vector3 position)
+    {
+        // Do brute force search
+        for (int i = 0; i < tileStacks.Count; i++)
+        {
+            for (int j = 0; j < tileStacks[i].Count; j++)
+            {
+                if (tileStacks[i][j].x == position.x && tileStacks[i][j].z == position.z)
+                {
+                    return tileStacks[i][j];
+                }
+            }
+        }
+        return null;
+    }
 
+    private void handleAction(TileStack tileStack)
+    {
+        switch (currentAction)
+        {
+            case UserActionType.cutTree:
+                if (tileStack.tree.exists)
+                {
+                    tileStack.tree.exists = false;
+                    tileStack.tree.tileObject.SetActive(false);
+                    --treeCount;
+                }
+                break;
+            case UserActionType.removeGrass:
+                if (tileStack.grass.exists && !tileStack.tree.exists)
+                {
+                    tileStack.grass.exists = false;
+                    tileStack.grass.tileObject.SetActive(false);
+                }
+                break;
+            case UserActionType.digGround:
+                if (tileStack.ground.exists && !tileStack.grass.exists && !tileStack.tree.exists)
+                {
+                    tileStack.ground.exists = false;
+                    tileStack.ground.tileObject.SetActive(false);
+                }
+                break;
+            case UserActionType.buildMetalMine:
+                if (isBuildable(currentAction, tileStack))
+                {
+                    // Disable metal tile
+                    tileStack.metal.exists = false;
+                    tileStack.metal.tileObject.SetActive(false);
+                    // Add mine
+                    tileStack.addTile(InstantiateObject(metalMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.metalMine);
+                    ++metalMineCount;
+                }
+                break;
+            case UserActionType.buildGoldMine:
+                if (isBuildable(currentAction, tileStack))
+                {
+                    // Disable gold tile
+                    tileStack.gold.exists = false;
+                    tileStack.gold.tileObject.SetActive(false);
+                    // Add mine
+                    tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.goldMine);
+                    ++goldMineCount;
+                }
+                break;
+            case UserActionType.buildUraniumMine:
+                if (isBuildable(currentAction, tileStack))
+                {
+                    // Disable uranium tile
+                    tileStack.uranium.exists = false;
+                    tileStack.uranium.tileObject.SetActive(false);
+                    // Add mine
+                    tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.uraniumMine);
+                    ++uraniumMineCount;
+                }
+                break;
+            case UserActionType.buildNuclearPlant:
+                if (isBuildable(currentAction, tileStack))
+                {
+                    // Disable uranium tile
+                    tileStack.uranium.exists = false;
+                    tileStack.uranium.tileObject.SetActive(false);
+                    // Add mine
+                    tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.nuclearPlant);
+                    ++nuclearPlantCount;
+                }
+                break;
+            case UserActionType.buildPipeline:
+                if (isBuildable(currentAction, tileStack))
+                {
+                    // Disable uranium tile
+                    tileStack.uranium.exists = false;
+                    tileStack.uranium.tileObject.SetActive(false);
+                    // Add mine
+                    tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.pipeline);
+                    ++pipelineCount;
+                }
+                break;
+            case UserActionType.none:
+            default:
+                return;
+        }
+        currentAction = UserActionType.none;
+    }
+
+    private bool isBuildable(UserActionType actionType, TileStack tileStack)
+    {
+        if (!tileStack.tree.exists && !tileStack.grass.exists && !tileStack.ground.exists)
+        {
+            switch (actionType)
+            {
+                case UserActionType.buildMetalMine:
+                    return tileStack.metal.exists;
+                case UserActionType.buildGoldMine:
+                    return tileStack.gold.exists;
+                case UserActionType.buildUraniumMine:
+                    return tileStack.uranium.exists;
+                case UserActionType.buildNuclearPlant:
+                case UserActionType.buildPipeline:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return false;
+    }
+
+    public void toggleOutline(TileStack tileStack)
+    {
+        // Disable the outline for all tiles
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        foreach (GameObject tile in tiles)
+        {
+            tile.GetComponent<Outline>().enabled = false;
+        }
+        // Outline the highest tile
+        if (tileStack.tree.exists)
+        {
+            tileStack.tree.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.grass.exists)
+        {
+            tileStack.grass.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.ground.exists)
+        {
+            tileStack.ground.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.metal.exists)
+        {
+            tileStack.metal.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.gold.exists)
+        {
+            tileStack.gold.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.uranium.exists)
+        {
+            tileStack.uranium.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.metalMine.exists)
+        {
+            tileStack.metalMine.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.goldMine.exists)
+        {
+            tileStack.goldMine.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.uraniumMine.exists)
+        {
+            tileStack.uraniumMine.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.nuclearPlant.exists)
+        {
+            tileStack.nuclearPlant.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.pipeline.exists)
+        {
+            tileStack.pipeline.tileObject.GetComponent<Outline>().enabled = true;
+        }
+        else if (tileStack.hotel.exists)
+        {
+            tileStack.hotel.tileObject.GetComponent<Outline>().enabled = true;
+        }
+    }
 
 
 }

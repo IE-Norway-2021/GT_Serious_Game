@@ -22,4 +22,4 @@ MonoBehaviour:
   zoomMax: 0
   zoomMin: 0
   rotateSpeed: 8
-  angleView: 30
+  angleView: 0

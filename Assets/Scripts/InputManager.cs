@@ -53,7 +53,7 @@ public class InputManager : MonoBehaviour
             if (cameraOrbit.transform.eulerAngles.z + v <= 0.1f || cameraOrbit.transform.eulerAngles.z + v >= 179.9f)
                 v = 0;
 
-            cameraOrbit.transform.eulerAngles = new Vector3(cameraOrbit.transform.eulerAngles.x, cameraOrbit.transform.eulerAngles.y + h, cameraOrbit.transform.eulerAngles.z + v);
+            cameraOrbit.transform.eulerAngles = new Vector3(cameraOrbit.transform.eulerAngles.x, cameraOrbit.transform.eulerAngles.y + h, gameSettings.angleView);
         }
 
         float scrollFactor = Input.GetAxis("Mouse ScrollWheel");
@@ -62,7 +62,7 @@ public class InputManager : MonoBehaviour
         {
             cameraOrbit.transform.localScale = cameraOrbit.transform.localScale * (1f - scrollFactor);
         }
-
+        transform.LookAt(Target);
     }
 
 

@@ -27,23 +27,8 @@ public class TileOnClick : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100))
             {
                 GameObject tile = hit.transform.gameObject;
-                toggleOutline(tile);
+                OnTileClick?.Invoke(tile);
             }
         }
-    }
-
-    void toggleOutline(GameObject gameobject)
-    {
-        // Disable the outline for all tiles
-        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
-        foreach (GameObject tile in tiles)
-        {
-            tile.GetComponent<Outline>().enabled = false;
-        }
-
-        // Enable the outline for the clicked tile
-        gameobject.GetComponent<Outline>().enabled = true;
-        selectedTile = gameobject;
-        OnTileClick?.Invoke(gameobject);
     }
 }
