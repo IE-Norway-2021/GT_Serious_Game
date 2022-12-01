@@ -80,9 +80,6 @@ public class GameManager : MonoBehaviour
     private const float TILE_X_OFFSET = 0.4f;
 
     // camera control
-
-    public InputManager inputManager;
-
     public TileOnClick tileOnClick;
 
     public GameSettings gameSettings;
@@ -354,7 +351,6 @@ public class GameManager : MonoBehaviour
         }
         else if (tileStack.ground.exists)
         {
-            Debug.Log("Is ground");
             // TODO : add minerals
             tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6), TileType.ground);
             if (tileStack.grass.exists)
