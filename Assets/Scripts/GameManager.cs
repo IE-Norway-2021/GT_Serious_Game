@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public enum TileType
 { //the values that are stored in the json file
@@ -43,6 +44,13 @@ public enum UserActionType
     buildPipeline = 8,
     buildHotel = 9,
 };
+
+public enum GameState
+{ //TODO a completer
+    startState = 0, // au début du lancement du jeu
+    gameOnGoing = 1, // après le lancement d'une partie
+    gameDone = 2, //la partie est finie
+}
 
 
 public class GameManager : MonoBehaviour
@@ -93,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     public long uraniumCount = 0;
 
+    public long moneyCount = 0;
+
     // Buildings :
 
     public long metalMineCount = 0;
@@ -106,6 +116,13 @@ public class GameManager : MonoBehaviour
     public long co2Count = 0;
 
     public long treeCount = 0;
+
+    // Time related :
+    public long timeCount = 0;
+
+    // Events for the UI
+
+    public Action<long, long, long> onUpdateDone;
 
     // Start is called before the first frame update
     void Start()
@@ -127,11 +144,65 @@ public class GameManager : MonoBehaviour
         //tileHolder.position = new Vector3(-tileStacks.Count * TILE_X_DEFAULT / 2, 0, -tileStacks[0].Count * TILE_Z_DEFAULT / 2);
         tileHolder.position = new Vector3(0, 0, 0);
 
+        // Set the starting money
+        moneyCount = gameSettings.startingMoney;
+
+        //TODO : pour l'instant on lance le jeu direct, a enlever
+        startGame();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void startGame() //TODO appeler cette fonction quand on lance le jeu
+    {
+        // TODO : se baser sur l'état du jeu pour savoir si on peut lancer une partie
+        // Reset time
+        timeCount = 0;
+        InvokeRepeating("GameStateUpdate", 0, gameSettings.updateDelay);
+    }
+
+    private void GameStateUpdate()
+    {
+        // Compute the CO2 added
+        long co2Added = 0;
+        co2Added += metalMineCount * gameSettings.metalMineCO2Production;
+        co2Added += goldMineCount * gameSettings.goldMineCO2Production;
+        co2Added += uraniumMineCount * gameSettings.uraniumMineCO2Production;
+        co2Added += nuclearPlantCount * gameSettings.nuclearPlantCO2Production;
+        co2Added += pipelineCount * gameSettings.pipelineCO2Production;
+        // Remove the CO2 taken by the trees
+        co2Added -= treeCount * gameSettings.treeCO2Decrease;
+        // Compute the money added
+        long moneyAdded = 0;
+        moneyAdded += metalMineCount * gameSettings.metalMineMoneyProduction;
+        moneyAdded += goldMineCount * gameSettings.goldMineMoneyProduction;
+        moneyAdded += uraniumMineCount * gameSettings.uraniumMineMoneyProduction;
+        // Compute the increase for every nuclear plant present
+        if (nuclearPlantCount > 0)
+        {
+            moneyAdded += moneyAdded * gameSettings.nuclearPlantMoneyIncrease * nuclearPlantCount;
+        }
+
+        // Update the counters
+        co2Count += co2Added;
+        if (co2Count < 0) // if trees remove too much
+        {
+            co2Count = 0;
+        }
+
+        moneyCount += moneyAdded;
+
+        // Update the time
+        timeCount += gameSettings.updateDelay;
+
+        // Update the UI
+        onUpdateDone?.Invoke(co2Count, moneyCount, timeCount);
+
+        Debug.Log("CO2 : " + co2Count + " Money : " + moneyCount + " Time : " + timeCount);
     }
 
     // Generates a random map of TileStacks

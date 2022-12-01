@@ -35,4 +35,31 @@ public class GameSettings : ScriptableObject
     public float zoomMin;
     public float rotateSpeed = 8f;
     public float angleView;
+
+    [Header("Game Settings")]
+    [Header("Production")]
+    public long updateDelay;
+    public long metalMineMoneyProduction;
+    public long metalMineCO2Production;
+    public long goldMineMoneyProduction;
+    public long goldMineCO2Production;
+    public long uraniumMineMoneyProduction;
+    public long uraniumMineCO2Production;
+    public long nuclearPlantMoneyIncrease;
+    public long nuclearPlantCO2Production;
+    public long pipelineCO2Production;
+    public long treeCO2Decrease;
+
+    [Header("Costs")]
+    public long metalMineCost;
+    public long goldMineCost;
+    public long uraniumMineCost;
+    public long nuclearPowerPlantCost;
+    public long pipelineCost;
+    public long treeCost;
+
+    [Header("Other")]
+    public long startingMoney;
+
+
 }
