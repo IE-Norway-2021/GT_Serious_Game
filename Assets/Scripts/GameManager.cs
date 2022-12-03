@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     // Buildings :
 
-    public long metalMineCount = 0;
+    public long metalMineCount = 40;
     public long goldMineCount = 0;
     public long uraniumMineCount = 0;
     public long nuclearPlantCount = 0;

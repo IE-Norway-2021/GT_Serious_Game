@@ -946,6 +946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2570f3e9c5158473dbfd12f977bc3cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resource: 0
+  newResource: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,7 +1342,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.5
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1581,9 +1583,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f212e1bc2f4bd4895cc12493e564b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOrbit: {fileID: 1430494169}
-  Target: {x: 0, y: 0, z: 0}
-  gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
 --- !u!4 &1469212968
 Transform:
   m_ObjectHideFlags: 0
@@ -1612,7 +1611,7 @@ GameObject:
   - component: {fileID: 1653300409}
   - component: {fileID: 1653300411}
   m_Layer: 5
-  m_Name: ProgressBar
+  m_Name: ResourceProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
