@@ -23,3 +23,21 @@ MonoBehaviour:
   zoomMin: 0
   rotateSpeed: 8
   angleView: 0
+  updateDelay: 1
+  metalMineMoneyProduction: 0
+  metalMineCO2Production: 0
+  goldMineMoneyProduction: 0
+  goldMineCO2Production: 0
+  uraniumMineMoneyProduction: 0
+  uraniumMineCO2Production: 0
+  nuclearPlantMoneyIncrease: 0
+  nuclearPlantCO2Production: 0
+  pipelineCO2Production: 0
+  treeCO2Decrease: 0
+  metalMineCost: 0
+  goldMineCost: 0
+  uraniumMineCost: 0
+  nuclearPowerPlantCost: 0
+  pipelineCost: 0
+  treeCost: 0
+  startingMoney: 25
