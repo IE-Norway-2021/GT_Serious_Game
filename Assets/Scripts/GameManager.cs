@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     // Counters for all the resources and various other things
 
     // Resources : 
-
+    public long money = 0;
     public long metalCount = 0;
 
     public long goldCount = 0;
@@ -198,6 +198,7 @@ public class GameManager : MonoBehaviour
 
         // Update the UI
         onUpdateDone?.Invoke(co2Count, moneyCount, timeCount);
+        
 
         Debug.Log("CO2 : " + co2Count + " Money : " + moneyCount + " Time : " + timeCount);
     }

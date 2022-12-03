@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
 
-	public ProgressBar resource;
-	public float newResource;
+	public ProgressBar money;
+	public float newMoney;
+    public TMP_Text moneyText;
+    
 
 	// Start is called before the first frame update
 	void Start()
@@ -17,8 +20,10 @@ public class UIManager : MonoBehaviour
 
 	void UpdateResource()
 	{
-        resource = GameObject.Find("ResourceProgressBar").GetComponent<ProgressBar>();
-		newResource = GameObject.Find("GameManager").GetComponent<GameManager>().metalMineCount;
-		resource.current = newResource;
+        money = GameObject.Find("MoneyProgressBar").GetComponent<ProgressBar>();
+        moneyText = GameObject.Find("MoneyCount").GetComponent<TMP_Text>();
+		newMoney = GameObject.Find("GameManager").GetComponent<GameManager>().moneyCount;
+		money.current = newMoney;
+        moneyText.text = newMoney.ToString();
 	}
 }

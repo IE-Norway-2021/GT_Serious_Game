@@ -12,6 +12,7 @@ public class ProgressBar : MonoBehaviour
     public Image mask;
 
 
+
     // Update is called once per frame
     void Update()
     {
