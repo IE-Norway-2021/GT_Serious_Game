@@ -9,12 +9,21 @@ using UnityEngine;
 public class Tile
 {
     public bool exists;
-    public GameObject tileObject;
+    public List<GameObject> tilesObject;
 
     public Tile()
     {
         exists = false;
-        tileObject = null;
+        tilesObject = new List<GameObject>();
+    }
+
+    public void highlightTile()
+    {
+        // Highlights only the highest tile
+        if (tilesObject.Count > 0)
+        {
+            tilesObject[tilesObject.Count - 1].GetComponent<Outline>().enabled = true;
+        }
     }
 }
 
@@ -78,57 +87,57 @@ public class TileStack
         switch (type)
         {
             case TileType.water:
-                water.tileObject = tile;
+                water.tilesObject.Add(tile);
                 break;
             case TileType.tree:
-                tree.tileObject = tile;
+                tree.tilesObject.Add(tile);
                 break;
             case TileType.grass:
-                grass.tileObject = tile;
+                grass.tilesObject.Add(tile);
                 break;
             case TileType.ground:
-                ground.tileObject = tile;
+                ground.tilesObject.Add(tile);
                 break;
             case TileType.rock:
-                rock.tileObject = tile;
+                rock.tilesObject.Add(tile);
                 break;
             case TileType.metal:
-                metal.tileObject = tile;
+                metal.tilesObject.Add(tile);
                 break;
             case TileType.gold:
-                gold.tileObject = tile;
+                gold.tilesObject.Add(tile);
                 break;
             case TileType.uranium:
-                uranium.tileObject = tile;
+                uranium.tilesObject.Add(tile);
                 break;
             case TileType.volcano:
-                // TODO : implement volcano as a list of tiles
+                volcano.tilesObject.Add(tile);
                 break;
             case TileType.volcanoBorder:
-                // TODO : implement volcano border as a list of tiles 
+                volcanoBorder.tilesObject.Add(tile);
                 break;
             case TileType.metalMine:
-                metalMine.tileObject = tile;
+                metalMine.tilesObject.Add(tile);
                 metalMine.exists = true;
                 break;
             case TileType.goldMine:
-                goldMine.tileObject = tile;
+                goldMine.tilesObject.Add(tile);
                 goldMine.exists = true;
                 break;
             case TileType.uraniumMine:
-                uraniumMine.tileObject = tile;
+                uraniumMine.tilesObject.Add(tile);
                 uraniumMine.exists = true;
                 break;
             case TileType.nuclearPlant:
-                nuclearPlant.tileObject = tile;
+                nuclearPlant.tilesObject.Add(tile);
                 nuclearPlant.exists = true;
                 break;
             case TileType.pipeline:
-                pipeline.tileObject = tile;
+                pipeline.tilesObject.Add(tile);
                 pipeline.exists = true;
                 break;
             case TileType.hotel:
-                hotel.tileObject = tile;
+                hotel.tilesObject.Add(tile);
                 hotel.exists = true;
                 break;
             default:

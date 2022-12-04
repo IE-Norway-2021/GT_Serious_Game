@@ -432,7 +432,8 @@ public class GameManager : MonoBehaviour
                 if (tileStack.tree.exists)
                 {
                     tileStack.tree.exists = false;
-                    tileStack.tree.tileObject.SetActive(false);
+                    tileStack.tree.tilesObject[0].SetActive(false);
+                    tileStack.tree.tilesObject.RemoveAt(0);
                     --treeCount;
                 }
                 break;
@@ -440,14 +441,19 @@ public class GameManager : MonoBehaviour
                 if (tileStack.grass.exists && !tileStack.tree.exists)
                 {
                     tileStack.grass.exists = false;
-                    tileStack.grass.tileObject.SetActive(false);
+                    tileStack.grass.tilesObject[0].SetActive(false);
+                    tileStack.grass.tilesObject.RemoveAt(0);
                 }
                 break;
             case UserActionType.digGround:
                 if (tileStack.ground.exists && !tileStack.grass.exists && !tileStack.tree.exists)
                 {
-                    tileStack.ground.exists = false;
-                    tileStack.ground.tileObject.SetActive(false);
+                    tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].SetActive(false);
+                    tileStack.ground.tilesObject.RemoveAt(tileStack.ground.tilesObject.Count - 1);
+                    if (tileStack.ground.tilesObject.Count == 0)
+                    {
+                        tileStack.ground.exists = false;
+                    }
                 }
                 break;
             case UserActionType.buildMetalMine:
@@ -455,7 +461,8 @@ public class GameManager : MonoBehaviour
                 {
                     // Disable metal tile
                     tileStack.metal.exists = false;
-                    tileStack.metal.tileObject.SetActive(false);
+                    tileStack.metal.tilesObject[0].SetActive(false);
+                    tileStack.metal.tilesObject.RemoveAt(0);
                     // Add mine
                     tileStack.addTile(InstantiateObject(metalMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.metalMine);
                     ++metalMineCount;
@@ -466,7 +473,8 @@ public class GameManager : MonoBehaviour
                 {
                     // Disable gold tile
                     tileStack.gold.exists = false;
-                    tileStack.gold.tileObject.SetActive(false);
+                    tileStack.gold.tilesObject[0].SetActive(false);
+                    tileStack.gold.tilesObject.RemoveAt(0);
                     // Add mine
                     tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.goldMine);
                     ++goldMineCount;
@@ -477,7 +485,8 @@ public class GameManager : MonoBehaviour
                 {
                     // Disable uranium tile
                     tileStack.uranium.exists = false;
-                    tileStack.uranium.tileObject.SetActive(false);
+                    tileStack.uranium.tilesObject[0].SetActive(false);
+                    tileStack.uranium.tilesObject.RemoveAt(0);
                     // Add mine
                     tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.uraniumMine);
                     ++uraniumMineCount;
@@ -488,7 +497,8 @@ public class GameManager : MonoBehaviour
                 {
                     // Disable uranium tile
                     tileStack.uranium.exists = false;
-                    tileStack.uranium.tileObject.SetActive(false);
+                    tileStack.uranium.tilesObject[0].SetActive(false);
+                    tileStack.uranium.tilesObject.RemoveAt(0);
                     // Add mine
                     tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.nuclearPlant);
                     ++nuclearPlantCount;
@@ -497,10 +507,6 @@ public class GameManager : MonoBehaviour
             case UserActionType.buildPipeline:
                 if (isBuildable(currentAction, tileStack))
                 {
-                    // Disable uranium tile
-                    tileStack.uranium.exists = false;
-                    tileStack.uranium.tileObject.SetActive(false);
-                    // Add mine
                     tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.pipeline);
                     ++pipelineCount;
                 }
@@ -545,51 +551,51 @@ public class GameManager : MonoBehaviour
         // Outline the highest tile
         if (tileStack.tree.exists)
         {
-            tileStack.tree.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.tree.highlightTile();
         }
         else if (tileStack.grass.exists)
         {
-            tileStack.grass.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.grass.highlightTile();
         }
         else if (tileStack.ground.exists)
         {
-            tileStack.ground.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.ground.highlightTile();
         }
         else if (tileStack.metal.exists)
         {
-            tileStack.metal.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.metal.highlightTile();
         }
         else if (tileStack.gold.exists)
         {
-            tileStack.gold.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.gold.highlightTile();
         }
         else if (tileStack.uranium.exists)
         {
-            tileStack.uranium.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.uranium.highlightTile();
         }
         else if (tileStack.metalMine.exists)
         {
-            tileStack.metalMine.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.metalMine.highlightTile();
         }
         else if (tileStack.goldMine.exists)
         {
-            tileStack.goldMine.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.goldMine.highlightTile();
         }
         else if (tileStack.uraniumMine.exists)
         {
-            tileStack.uraniumMine.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.uraniumMine.highlightTile();
         }
         else if (tileStack.nuclearPlant.exists)
         {
-            tileStack.nuclearPlant.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.nuclearPlant.highlightTile();
         }
         else if (tileStack.pipeline.exists)
         {
-            tileStack.pipeline.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.pipeline.highlightTile();
         }
         else if (tileStack.hotel.exists)
         {
-            tileStack.hotel.tileObject.GetComponent<Outline>().enabled = true;
+            tileStack.hotel.highlightTile();
         }
     }
 
