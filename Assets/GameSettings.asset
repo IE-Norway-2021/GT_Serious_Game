@@ -40,8 +40,4 @@ MonoBehaviour:
   nuclearPowerPlantCost: 0
   pipelineCost: 0
   treeCost: 0
-<<<<<<< Updated upstream
   startingMoney: 25
-=======
-  startingMoney: 0
->>>>>>> Stashed changes
