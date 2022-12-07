@@ -25,6 +25,10 @@ public class CameraController : MonoBehaviour
     public Vector3 rotateCurrentPosition;
 
 
+    public Vector3 dragStartPosition;
+    public Vector3 dragCurrentPosition;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,27 +41,27 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleMouseInput();
         HandleMovementInput();
     }
 
-    // void HandleMouseInput() {
+    void HandleMouseInput() {
+        // 0 : left click
+        // 1 : right click
+        // 2 : middle click
 
-    //     if (Input.GetMouseButtonDown(0)) {
-    //         Debug.Log(Input.GetMouseButtonDown(2));
-    //         rotateStartPosition = Input.mousePosition;
-    //     }
-
-    //     if (Input.GetMouseButton(0)) {
-    //         Debug.Log(Input.GetMouseButton(2));
-    //         rotateCurrentPosition = Input.mousePosition;
-    //         Vector3 difference = rotateStartPosition - rotateCurrentPosition;
-    //         rotateStartPosition = rotateCurrentPosition;
-    //         difference.y = rotateStartPosition.y;
-    //         difference.x = rotateCurrentPosition.x;
-    //         newRotation *= Quaternion.Euler(difference);
-    //     }
+        if (Input.GetMouseButtonDown(1)) {
+          rotateStartPosition = Input.mousePosition;
+        }
         
-    // }
+        if (Input.GetMouseButton(1)) {
+            rotateCurrentPosition = Input.mousePosition;
+            Vector3 difference = rotateStartPosition - rotateCurrentPosition;
+            rotateStartPosition = rotateCurrentPosition;
+            newRotation *= Quaternion.Euler(Vector3.up * (-difference.x / 5f));
+        }
+
+    }
     
 
     void HandleMovementInput() {
