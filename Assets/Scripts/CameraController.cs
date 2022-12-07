@@ -25,11 +25,6 @@ public class CameraController : MonoBehaviour
     public Vector3 rotateCurrentPosition;
 
 
-    public Vector3 dragStartPosition;
-    public Vector3 dragCurrentPosition;
-
-
-
     // Start is called before the first frame update
     void Start()
     {
