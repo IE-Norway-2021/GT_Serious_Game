@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
 
         // Update the UI
         onUpdateDone?.Invoke(co2Count, moneyCount, timeCount);
-        
+
 
         Debug.Log("CO2 : " + co2Count + " Money : " + moneyCount + " Time : " + timeCount);
     }
@@ -400,15 +400,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Do action depending on the button clicked
-            handleAction(tileStack);
-
             // highlight the tile
             toggleOutline(tileStack);
         }
     }
 
-    private TileStack getTileStackFromPosition(Vector3 position)
+    public TileStack getTileStackFromPosition(Vector3 position)
     {
         // Do brute force search
         for (int i = 0; i < tileStacks.Count; i++)
@@ -424,9 +421,9 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    private void handleAction(TileStack tileStack)
+    public void handleAction(TileStack tileStack, UserActionType action)
     {
-        switch (currentAction)
+        switch (action)
         {
             case UserActionType.cutTree:
                 if (tileStack.tree.exists)
@@ -457,7 +454,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case UserActionType.buildMetalMine:
-                if (isBuildable(currentAction, tileStack))
+                if (isBuildable(action, tileStack))
                 {
                     // Disable metal tile
                     tileStack.metal.exists = false;
@@ -469,7 +466,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case UserActionType.buildGoldMine:
-                if (isBuildable(currentAction, tileStack))
+                if (isBuildable(action, tileStack))
                 {
                     // Disable gold tile
                     tileStack.gold.exists = false;
@@ -481,7 +478,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case UserActionType.buildUraniumMine:
-                if (isBuildable(currentAction, tileStack))
+                if (isBuildable(action, tileStack))
                 {
                     // Disable uranium tile
                     tileStack.uranium.exists = false;
@@ -493,7 +490,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case UserActionType.buildNuclearPlant:
-                if (isBuildable(currentAction, tileStack))
+                if (isBuildable(action, tileStack))
                 {
                     // Disable uranium tile
                     tileStack.uranium.exists = false;
@@ -505,7 +502,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case UserActionType.buildPipeline:
-                if (isBuildable(currentAction, tileStack))
+                if (isBuildable(action, tileStack))
                 {
                     tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.pipeline);
                     ++pipelineCount;

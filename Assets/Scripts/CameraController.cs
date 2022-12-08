@@ -19,6 +19,9 @@ public class CameraController : MonoBehaviour
 
     public float rotationAmount;
 
+    public Vector3 zoomMax;
+    public Vector3 zoomMin;
+
 
     // mouse movement
     public Vector3 rotateStartPosition;
@@ -28,7 +31,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        newPosition = transform.position;  
+        newPosition = transform.position;
         newZoom = cameraTransform.localPosition;
         newRotation = transform.rotation;
     }
@@ -40,16 +43,19 @@ public class CameraController : MonoBehaviour
         HandleMovementInput();
     }
 
-    void HandleMouseInput() {
+    void HandleMouseInput()
+    {
         // 0 : left click
         // 1 : right click
         // 2 : middle click
 
-        if (Input.GetMouseButtonDown(1)) {
-          rotateStartPosition = Input.mousePosition;
+        if (Input.GetMouseButtonDown(1))
+        {
+            rotateStartPosition = Input.mousePosition;
         }
-        
-        if (Input.GetMouseButton(1)) {
+
+        if (Input.GetMouseButton(1))
+        {
             rotateCurrentPosition = Input.mousePosition;
             Vector3 difference = rotateStartPosition - rotateCurrentPosition;
             rotateStartPosition = rotateCurrentPosition;
@@ -57,37 +63,46 @@ public class CameraController : MonoBehaviour
         }
 
     }
-    
 
-    void HandleMovementInput() {
-        if (Input.GetKey(KeyCode.W)) {
+
+    void HandleMovementInput()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
             newPosition += (transform.forward * moveSpeed);
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.S))
+        {
             newPosition += (transform.forward * -moveSpeed);
         }
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A))
+        {
             newPosition += (transform.right * -moveSpeed);
         }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D))
+        {
             newPosition += (transform.right * moveSpeed);
         }
 
         // zoom in when mouse rolls up
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
             newZoom += zoomAmount;
         }
 
         // zoom out when mouse rolls down
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
             newZoom -= zoomAmount;
         }
 
-        if (Input.GetKey(KeyCode.Q)) {
+        if (Input.GetKey(KeyCode.Q))
+        {
             newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
         }
 
-        if (Input.GetKey(KeyCode.E)) {
+        if (Input.GetKey(KeyCode.E))
+        {
             newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
         }
 
