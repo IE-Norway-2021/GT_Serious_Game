@@ -359,9 +359,20 @@ public class GameManager : MonoBehaviour
             if (tileStack.grass.exists)
             {
                 tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6), TileType.grass);
+
                 if (tileStack.tree.exists)
                 {
-                    tileStack.addTile(InstantiateObject(treeTilePrefab, x, 1.5f, z, 6), TileType.tree);
+                    // Randomly add trees on tiles
+                    int max = UnityEngine.Random.Range(0, 5);
+                    for (int i = 0; i < max; i++)
+                    {
+                        float xOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
+                        float zOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
+                        float size = UnityEngine.Random.Range(0.8f, 1.5f);
+                        GameObject tree = InstantiateObject(treeTilePrefab, x+xOffset, 1.5f, z+zOffset, 6);
+                        tree.transform.localScale = new Vector3(size, size, size);
+                        tileStack.addTile(tree, TileType.tree);
+                    }
                 }
             }
         }
