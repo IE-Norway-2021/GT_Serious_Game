@@ -191,6 +191,8 @@ public class GameManager : MonoBehaviour
             co2Count = 0;
         }
 
+        ++moneyCount;
+
         moneyCount += moneyAdded;
 
         // Update the time

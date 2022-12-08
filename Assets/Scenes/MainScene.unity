@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1461,7 +1461,7 @@ GameObject:
   - component: {fileID: 1743254589}
   - component: {fileID: 1743254588}
   m_Layer: 0
-  m_Name: TilesOnClickHandler
+  m_Name: TileOnClickHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1536,7 +1536,7 @@ MonoBehaviour:
   co2: {fileID: 0}
   newCo2: 0
   co2Text: {fileID: 0}
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 1118584344}
 --- !u!114 &1796097447
 MonoBehaviour:
   m_ObjectHideFlags: 0
