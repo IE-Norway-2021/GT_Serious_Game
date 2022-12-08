@@ -7,11 +7,11 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public TileOnClick tileOnClick;
+	public TileOnClick tileOnClick;
 
 	// Buttons
 	public Button selectedButton;
-    public Button removeButton;
+	public Button removeButton;
 
 	// Progress bars
 	public ProgressBar money;
@@ -25,23 +25,23 @@ public class UIManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-        tileOnClick = GameObject.Find("TileOnClickHandler").GetComponent<TileOnClick>();
-        removeButton = GameObject.Find("RemoveButton").GetComponent<Button>();
+		// tileOnClick = GameObject.Find("TileOnClickHandler").GetComponent<TileOnClick>();
+		// removeButton = GameObject.Find("RemoveButton").GetComponent<Button>();
 		// Update resource every 1 second
 		InvokeRepeating("UpdateResource", 0, 1);
 	}
 
 	void Update()
 	{
-        // Enable button according to selected tile/object
-        if (tileOnClick.selectedTile != null)
-        {
-            removeButton.interactable = true;
-        }
-        else
-        {
-            removeButton.interactable = false;
-        }
+		// Enable button according to selected tile/object
+			// if (tileOnClick.selectedTile != null)
+			// {
+			// 	removeButton.interactable = true;
+			// }
+			// else
+			// {
+			// 	removeButton.interactable = false;
+			// }
 	}
 
 	private void UpdateResource()
@@ -65,10 +65,10 @@ public class UIManager : MonoBehaviour
 	{
 		// Log current clicked button
 		selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-        if (selectedButton.name == "RemoveButton")
-        {
-            Destroy(tileOnClick.selectedTile.gameObject);
-        }
-        tileOnClick.selectedTile = null;
+		if (selectedButton.name == "RemoveButton")
+		{
+			Destroy(tileOnClick.selectedTile.gameObject);
+		}
+		tileOnClick.selectedTile = null;
 	}
 }
