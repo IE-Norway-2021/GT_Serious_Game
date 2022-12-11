@@ -30,12 +30,12 @@ public class TileOnClick : MonoBehaviour
                 if (tile.tag == "Tile")
                 {
                     selectedTile = tile;
-                    OnTileClick?.Invoke(tile);
+                    // OnTileClick?.Invoke(tile);
                 } else {
                     selectedTile = null;
-                    OnTileClick?.Invoke(null);
+                    // OnTileClick?.Invoke(null);
                 }
-                OnTileClick?.Invoke(tile);
+                // OnTileClick?.Invoke(tile);
             }
         }
     }

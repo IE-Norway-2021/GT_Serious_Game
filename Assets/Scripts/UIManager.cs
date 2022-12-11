@@ -64,10 +64,10 @@ public class UIManager : MonoBehaviour
     private void UpdateResource()
     {
         // Money
-        money = GameObject.Find("MoneyProgressBar").GetComponent<ProgressBar>();
+      //   money = GameObject.Find("MoneyProgressBar").GetComponent<ProgressBar>();
         moneyText = GameObject.Find("MoneyCount").GetComponent<TMP_Text>();
         newMoney = gameManager.moneyCount;
-        money.current = newMoney;
+      //   money.current = newMoney;
         moneyText.text = newMoney.ToString();
 
         // CO2
