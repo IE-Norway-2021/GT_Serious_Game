@@ -1073,15 +1073,15 @@ MonoBehaviour:
   grassTilePrefab: {fileID: 8180149530335123196, guid: ad43f3f86aa951e47ba2d25088e18acd, type: 3}
   groundTilePrefab: {fileID: 1400212807877390231, guid: f685988d79ed5f34680b1136f56a3163, type: 3}
   rockTilePrefab: {fileID: 6182826537866291316, guid: c6293c79492e7e4479d90731fc86e807, type: 3}
-  metalTilePrefab: {fileID: 0}
-  goldTilePrefab: {fileID: 0}
-  uraniumTilePrefab: {fileID: 0}
+  metalTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
+  goldTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
+  uraniumTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
   volcanoTilePrefab: {fileID: 7134424643256078547, guid: 0d2f910143ac25b40a3b33782bab0003, type: 3}
-  metalMineTilePrefab: {fileID: 0}
-  goldMineTilePrefab: {fileID: 0}
-  uraniumMineTilePrefab: {fileID: 0}
-  nuclearPlantTilePrefab: {fileID: 0}
-  pipelineTilePrefab: {fileID: 0}
+  metalMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
+  goldMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
+  uraniumMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
+  nuclearPlantTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
+  pipelineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
   tileHolder: {fileID: 2119444204}
   tileOnClick: {fileID: 1743254588}
   gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
@@ -1099,6 +1099,7 @@ MonoBehaviour:
   co2Count: 0
   treeCount: 0
   timeCount: 0
+  pipelineFinished: 0
 --- !u!4 &1118584345
 Transform:
   m_ObjectHideFlags: 0
@@ -1536,6 +1537,9 @@ MonoBehaviour:
   co2: {fileID: 0}
   newCo2: 0
   co2Text: {fileID: 0}
+  time: {fileID: 0}
+  newTime: 0
+  timeText: {fileID: 0}
   gameManager: {fileID: 1118584344}
 --- !u!114 &1796097447
 MonoBehaviour:

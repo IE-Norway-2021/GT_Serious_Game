@@ -56,10 +56,20 @@ public class GameSettings : ScriptableObject
     public long uraniumMineCost;
     public long nuclearPowerPlantCost;
     public long pipelineCost;
+    public long hotelCost;
     public long treeCost;
+    public long grassCost;
+    public long groundCost;
+
+    public long goldMineCO2Threshold;
+    public long uraniumMineCO2Threshold;
+    public long nuclearPowerPlantCO2Threshold;
+    public long pipelineCO2Threshold;
 
     [Header("Other")]
     public long startingMoney;
+    public long gameDuration;
+    public long maxCO2;
 
 
 }

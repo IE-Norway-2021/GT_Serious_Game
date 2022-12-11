@@ -35,6 +35,10 @@ public class TileStack
     public float x;
     public float z;
 
+    // Array position
+    public int xIndex;
+    public int zIndex;
+
     public Tile water;
     public Tile tree;
     public Tile grass;
@@ -56,10 +60,12 @@ public class TileStack
     public Tile pipeline;
     public Tile hotel;
 
-    public TileStack(float x, float z)
+    public TileStack(float x, float z, int xIndex, int zIndex)
     {
         this.x = x;
         this.z = z;
+        this.xIndex = xIndex;
+        this.zIndex = zIndex;
         // instantiate every Tile
         water = new Tile();
         tree = new Tile();

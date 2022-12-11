@@ -34,9 +34,9 @@ public enum TileType
 public enum UserActionType
 {
     none = 0,
-    cutTree = 1,
+    removeTree = 1,
     removeGrass = 2,
-    digGround = 3,
+    removeGround = 3,
     buildMetalMine = 4,
     buildGoldMine = 5,
     buildUraniumMine = 6,
@@ -49,7 +49,7 @@ public enum GameState
 { //TODO a completer
     startState = 0, // au début du lancement du jeu
     gameOnGoing = 1, // après le lancement d'une partie
-    gameDone = 2, //la partie est finie
+    gameOver = 2, //la partie est finie
 }
 
 
@@ -117,9 +117,13 @@ public class GameManager : MonoBehaviour
     // Time related :
     public long timeCount = 0;
 
+    public bool pipelineFinished = false;
+
     // Events for the UI
 
-    public Action<long, long, long> onUpdateDone;
+    public Action onUpdateDone;
+
+    public Action onGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -191,19 +195,26 @@ public class GameManager : MonoBehaviour
             co2Count = 0;
         }
 
-        ++moneyCount;
-
         moneyCount += moneyAdded;
 
         // Update the time
         timeCount += gameSettings.updateDelay;
 
+        if (timeCount >= gameSettings.gameDuration || co2Count >= gameSettings.maxCO2)
+        {
+            // Game is over
+            CancelInvoke("GameStateUpdate");
+            onGameOver?.Invoke();
+        }
+
         // Update the UI
-        onUpdateDone?.Invoke(co2Count, moneyCount, timeCount);
+        onUpdateDone?.Invoke();
 
 
         Debug.Log("CO2 : " + co2Count + " Money : " + moneyCount + " Time : " + timeCount);
     }
+
+
 
     // Generates a random map of TileStacks
     public void GenerateMap()
@@ -224,7 +235,7 @@ public class GameManager : MonoBehaviour
                 {
                     decalage = -TILE_X_OFFSET;
                 }
-                tileStacks[i].Add(new TileStack(x + decalage, z));
+                tileStacks[i].Add(new TileStack(x + decalage, z, i, j));
             }
             z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
         }
@@ -354,7 +365,20 @@ public class GameManager : MonoBehaviour
         }
         else if (tileStack.ground.exists)
         {
-            // TODO : add minerals
+            // check if we need to add minerals
+            if (tileStack.metal.exists)
+            {
+                tileStack.addTile(InstantiateObject(metalTilePrefab, x, -0.5f, z, 6), TileType.metal);
+            }
+            else if (tileStack.gold.exists)
+            {
+                tileStack.addTile(InstantiateObject(goldTilePrefab, x, -0.5f, z, 6), TileType.gold);
+            }
+            else if (tileStack.uranium.exists)
+            {
+                tileStack.addTile(InstantiateObject(uraniumTilePrefab, x, -0.5f, z, 6), TileType.uranium);
+            }
+
             tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6), TileType.ground);
             if (tileStack.grass.exists)
             {
@@ -363,15 +387,16 @@ public class GameManager : MonoBehaviour
                 if (tileStack.tree.exists)
                 {
                     // Randomly add trees on tiles
-                    int max = UnityEngine.Random.Range(0, 5);
+                    int max = UnityEngine.Random.Range(1, 5);
                     for (int i = 0; i < max; i++)
                     {
                         float xOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float zOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float size = UnityEngine.Random.Range(0.8f, 1.5f);
-                        GameObject tree = InstantiateObject(treeTilePrefab, x+xOffset, 1.5f, z+zOffset, 6);
+                        GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, 1.5f, z + zOffset, 6);
                         tree.transform.localScale = new Vector3(size, size, size);
                         tileStack.addTile(tree, TileType.tree);
+                        // TODO vérifier pourquoi les arbres ne s'enlèvent pas correctement quand y'en a plusieurs
                     }
                 }
             }
@@ -438,13 +463,19 @@ public class GameManager : MonoBehaviour
     {
         switch (action)
         {
-            case UserActionType.cutTree:
+            case UserActionType.removeTree:
                 if (tileStack.tree.exists)
                 {
+                    Debug.Log("Removing tree, trees : " + tileStack.tree.tilesObject.Count);
                     tileStack.tree.exists = false;
-                    tileStack.tree.tilesObject[0].SetActive(false);
-                    tileStack.tree.tilesObject.RemoveAt(0);
+                    // remove all trees on the tile
+                    for (int i = 0; i < tileStack.tree.tilesObject.Count; i++)
+                    {
+                        tileStack.tree.tilesObject[i].SetActive(false);
+                        tileStack.tree.tilesObject.RemoveAt(i);
+                    }
                     --treeCount;
+                    moneyCount -= gameSettings.treeCost;
                 }
                 break;
             case UserActionType.removeGrass:
@@ -453,9 +484,10 @@ public class GameManager : MonoBehaviour
                     tileStack.grass.exists = false;
                     tileStack.grass.tilesObject[0].SetActive(false);
                     tileStack.grass.tilesObject.RemoveAt(0);
+                    moneyCount -= gameSettings.grassCost;
                 }
                 break;
-            case UserActionType.digGround:
+            case UserActionType.removeGround:
                 if (tileStack.ground.exists && !tileStack.grass.exists && !tileStack.tree.exists)
                 {
                     tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].SetActive(false);
@@ -464,6 +496,7 @@ public class GameManager : MonoBehaviour
                     {
                         tileStack.ground.exists = false;
                     }
+                    moneyCount -= gameSettings.groundCost;
                 }
                 break;
             case UserActionType.buildMetalMine:
@@ -476,6 +509,7 @@ public class GameManager : MonoBehaviour
                     // Add mine
                     tileStack.addTile(InstantiateObject(metalMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.metalMine);
                     ++metalMineCount;
+                    moneyCount -= gameSettings.metalMineCost;
                 }
                 break;
             case UserActionType.buildGoldMine:
@@ -488,6 +522,7 @@ public class GameManager : MonoBehaviour
                     // Add mine
                     tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.goldMine);
                     ++goldMineCount;
+                    moneyCount -= gameSettings.goldMineCost;
                 }
                 break;
             case UserActionType.buildUraniumMine:
@@ -500,6 +535,7 @@ public class GameManager : MonoBehaviour
                     // Add mine
                     tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.uraniumMine);
                     ++uraniumMineCount;
+                    moneyCount -= gameSettings.uraniumMineCost;
                 }
                 break;
             case UserActionType.buildNuclearPlant:
@@ -512,6 +548,7 @@ public class GameManager : MonoBehaviour
                     // Add mine
                     tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.nuclearPlant);
                     ++nuclearPlantCount;
+                    moneyCount -= gameSettings.nuclearPowerPlantCost;
                 }
                 break;
             case UserActionType.buildPipeline:
@@ -519,6 +556,17 @@ public class GameManager : MonoBehaviour
                 {
                     tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.pipeline);
                     ++pipelineCount;
+                    moneyCount -= gameSettings.pipelineCost;
+                    // Check if there is water nearby
+                    TileStack[] neighbours = getNeighbours(tileStack);
+                    foreach (TileStack neighbour in neighbours)
+                    {
+                        if (neighbour.water.exists)
+                        {
+                            pipelineFinished = true;
+                            break;
+                        }
+                    }
                 }
                 break;
             case UserActionType.none:
@@ -528,8 +576,13 @@ public class GameManager : MonoBehaviour
         currentAction = UserActionType.none;
     }
 
-    private bool isBuildable(UserActionType actionType, TileStack tileStack)
+    public bool isBuildable(UserActionType actionType, TileStack tileStack)
     {
+        if (tileStack.metalMine.exists || tileStack.goldMine.exists || tileStack.uraniumMine.exists || tileStack.nuclearPlant.exists || tileStack.pipeline.exists)
+        {
+            return false;
+        }
+
         if (!tileStack.tree.exists && !tileStack.grass.exists && !tileStack.ground.exists)
         {
             switch (actionType)
@@ -542,7 +595,28 @@ public class GameManager : MonoBehaviour
                     return tileStack.uranium.exists;
                 case UserActionType.buildNuclearPlant:
                 case UserActionType.buildPipeline:
+                    return false;
+                default:
+                    return false;
+            }
+        }
+        else if (!tileStack.tree.exists && !tileStack.grass.exists && tileStack.ground.exists)
+        {
+            switch (actionType)
+            {
+                case UserActionType.buildNuclearPlant:
                     return true;
+                case UserActionType.buildPipeline:
+                    // check surrounding tiles. One of them needs to have a pipeline or a volcano border
+                    TileStack[] neighbours = getNeighbours(tileStack);
+                    foreach (TileStack neighbour in neighbours)
+                    {
+                        if (neighbour != null && (neighbour.pipeline.exists || neighbour.volcanoBorder.exists))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 default:
                     return false;
             }
@@ -610,4 +684,30 @@ public class GameManager : MonoBehaviour
     }
 
 
+    // a function that returns the 6 neighbours of a tile, taking into account the hexagonal grid
+    public TileStack[] getNeighbours(TileStack tileStack)
+    {
+        TileStack[] neighbours = new TileStack[6];
+        int x = tileStack.xIndex;
+        int z = tileStack.zIndex;
+        if (x % 2 == 0)
+        {
+            neighbours[0] = tileStacks[x - 1][z];
+            neighbours[1] = tileStacks[x - 1][z + 1];
+            neighbours[2] = tileStacks[x][z + 1];
+            neighbours[3] = tileStacks[x + 1][z];
+            neighbours[4] = tileStacks[x][z - 1];
+            neighbours[5] = tileStacks[x - 1][z - 1];
+        }
+        else
+        {
+            neighbours[0] = tileStacks[x - 1][z];
+            neighbours[1] = tileStacks[x][z + 1];
+            neighbours[2] = tileStacks[x + 1][z + 1];
+            neighbours[3] = tileStacks[x + 1][z];
+            neighbours[4] = tileStacks[x + 1][z - 1];
+            neighbours[5] = tileStacks[x][z - 1];
+        }
+        return neighbours;
+    }
 }
