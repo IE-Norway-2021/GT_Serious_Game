@@ -405,9 +405,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Remove
-
-'
+  m_text: Remove (r)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1151,15 +1149,15 @@ MonoBehaviour:
   grassTilePrefab: {fileID: 8180149530335123196, guid: ad43f3f86aa951e47ba2d25088e18acd, type: 3}
   groundTilePrefab: {fileID: 1400212807877390231, guid: f685988d79ed5f34680b1136f56a3163, type: 3}
   rockTilePrefab: {fileID: 6182826537866291316, guid: c6293c79492e7e4479d90731fc86e807, type: 3}
-  metalTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
-  goldTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
-  uraniumTilePrefab: {fileID: 4494424906501496480, guid: fcd1646a7d684774ea8cc2b0886b2fbb, type: 3}
+  metalTilePrefab: {fileID: 5326266875243335781, guid: ddbee5b325ccb4152a4295326410c607, type: 3}
+  goldTilePrefab: {fileID: 5326266875243335781, guid: ddbee5b325ccb4152a4295326410c607, type: 3}
+  uraniumTilePrefab: {fileID: 5326266875243335781, guid: ddbee5b325ccb4152a4295326410c607, type: 3}
   volcanoTilePrefab: {fileID: 7134424643256078547, guid: 0d2f910143ac25b40a3b33782bab0003, type: 3}
-  metalMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
-  goldMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
-  uraniumMineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
-  nuclearPlantTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
-  pipelineTilePrefab: {fileID: 6043818143122302761, guid: 7a2a665960ffb654aaea6dde99e78386, type: 3}
+  metalMineTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
+  goldMineTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
+  uraniumMineTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
+  nuclearPlantTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
+  pipelineTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
   tileHolder: {fileID: 2119444204}
   tileOnClick: {fileID: 1743254588}
   gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
@@ -1609,6 +1607,7 @@ MonoBehaviour:
   tileOnClick: {fileID: 0}
   selectedButton: {fileID: 0}
   removeButton: {fileID: 0}
+  buildMetalButton: {fileID: 0}
   money: {fileID: 0}
   newMoney: 0
   moneyText: {fileID: 0}
