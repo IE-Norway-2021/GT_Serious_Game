@@ -25,3 +25,4 @@ public class ProgressBar : MonoBehaviour
         mask.fillAmount = currentFill;
     }
 }
+    

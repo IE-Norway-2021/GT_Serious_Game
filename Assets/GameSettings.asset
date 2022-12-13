@@ -24,7 +24,7 @@ MonoBehaviour:
   rotateSpeed: 8
   angleView: 0
   updateDelay: 1
-  metalMineMoneyProduction: 0
+  metalMineMoneyProduction: 10
   metalMineCO2Production: 0
   goldMineMoneyProduction: 0
   goldMineCO2Production: 0
@@ -39,5 +39,14 @@ MonoBehaviour:
   uraniumMineCost: 0
   nuclearPowerPlantCost: 0
   pipelineCost: 0
+  hotelCost: 0
   treeCost: 0
+  grassCost: 0
+  groundCost: 0
+  goldMineCO2Threshold: 0
+  uraniumMineCO2Threshold: 0
+  nuclearPowerPlantCO2Threshold: 0
+  pipelineCO2Threshold: 0
   startingMoney: 25
+  gameDuration: 300
+  maxCO2: 500

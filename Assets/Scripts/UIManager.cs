@@ -14,10 +14,13 @@ public class UIManager : MonoBehaviour
 	public Button removeButton;
 	public Button buildMetalButton;
 
-	// Progress bars
+	// Progress bars and infos
 	public ProgressBar money;
 	public float newMoney;
 	public TMP_Text moneyText;
+	public float newCost;
+	public TMP_Text costText;
+
 	public ProgressBar co2;
 	public float newCo2;
 	public TMP_Text co2Text;
@@ -40,6 +43,11 @@ public class UIManager : MonoBehaviour
 		//gameManager.onUpdateDone += UpdateButtons;
 		// Game over
 		gameManager.onGameOver += GameOver;
+
+		// Time
+		time = GameObject.Find("TimeProgressBar").GetComponent<ProgressBar>();
+		time.maximum = gameManager.gameSettings.gameDuration;
+		time.current = gameManager.gameSettings.gameDuration;
 	}
 
 	void Update()
@@ -89,12 +97,11 @@ public class UIManager : MonoBehaviour
 		co2.current = newCo2;
 		co2Text.text = newCo2.ToString();
 
+		// Costs
+		costText = GameObject.Find("Cost").GetComponent<TMP_Text>();
+
 		// Time
-		// time = GameObject.Find("TimeProgressBar").GetComponent<ProgressBar>();
-		// timeText = GameObject.Find("TimeCount").GetComponent<TMP_Text>();
-		// newTime = gameManager.timeCount;
-		// time.current = newTime;
-		// timeText.text = newTime.ToString();
+		time.current = gameManager.timeCount;
 	}
 
 	private void UpdateButtons()
