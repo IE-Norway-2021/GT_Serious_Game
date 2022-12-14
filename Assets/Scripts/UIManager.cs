@@ -48,6 +48,11 @@ public class UIManager : MonoBehaviour
 		// Game over
 		gameManager.onGameOver += GameOver;
 
+		// CO2
+		co2 = GameObject.Find("CO2ProgressBar").GetComponent<ProgressBar>();
+		co2Text = GameObject.Find("CO2Count").GetComponent<TMP_Text>();
+		co2.maximum = gameManager.gameSettings.maxCO2;
+
 		// Time
 		time = GameObject.Find("TimeProgressBar").GetComponent<ProgressBar>();
 		time.maximum = gameManager.gameSettings.gameDuration;
@@ -119,8 +124,6 @@ public class UIManager : MonoBehaviour
 		moneyText.text = newMoney.ToString();
 
 		// CO2
-		co2 = GameObject.Find("CO2ProgressBar").GetComponent<ProgressBar>();
-		co2Text = GameObject.Find("CO2Count").GetComponent<TMP_Text>();
 		newCo2 = gameManager.co2Count;
 		co2.current = newCo2;
 		co2Text.text = newCo2.ToString();

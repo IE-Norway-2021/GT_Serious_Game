@@ -584,8 +584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9aecfaff600c44558a166fdc4e417dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 50
-  maximum: 100
+  current: 500
+  maximum: 500
   mask: {fileID: 225262785}
 --- !u!114 &188138710
 MonoBehaviour:
@@ -703,7 +703,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.5
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3125,6 +3125,7 @@ MonoBehaviour:
   buildMetalButton: {fileID: 0}
   buildGoldButton: {fileID: 0}
   buildUraniumButton: {fileID: 0}
+  buildNuclearButton: {fileID: 0}
   money: {fileID: 0}
   newMoney: 0
   moneyText: {fileID: 0}
