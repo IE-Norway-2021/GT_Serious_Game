@@ -26,27 +26,27 @@ MonoBehaviour:
   updateDelay: 1
   metalMineMoneyProduction: 1
   metalMineCO2Production: 1
-  goldMineMoneyProduction: 0
-  goldMineCO2Production: 0
-  uraniumMineMoneyProduction: 0
-  uraniumMineCO2Production: 0
-  nuclearPlantMoneyIncrease: 0
-  nuclearPlantCO2Production: 0
+  goldMineMoneyProduction: 10
+  goldMineCO2Production: 10
+  uraniumMineMoneyProduction: 50
+  uraniumMineCO2Production: 50
+  nuclearPlantMoneyIncrease: 100
+  nuclearPlantCO2Production: 100
   pipelineCO2Production: 0
   treeCO2Decrease: 0
   metalMineCost: 10
-  goldMineCost: 0
-  uraniumMineCost: 0
-  nuclearPowerPlantCost: 0
-  pipelineCost: 0
-  hotelCost: 0
-  treeCost: 0
-  grassCost: 0
-  groundCost: 0
+  goldMineCost: 50
+  uraniumMineCost: 100
+  nuclearPowerPlantCost: 5000
+  pipelineCost: 10000
+  hotelCost: 1000000
+  treeCost: 10
+  grassCost: 5
+  groundCost: 5
   goldMineCO2Threshold: 0
   uraniumMineCO2Threshold: 0
   nuclearPowerPlantCO2Threshold: 0
   pipelineCO2Threshold: 0
-  startingMoney: 25
+  startingMoney: 500
   gameDuration: 300
   maxCO2: 500

@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 40865302}
   - component: {fileID: 40865301}
   - component: {fileID: 40865300}
-  - component: {fileID: 40865303}
   m_Layer: 5
   m_Name: BuildGoldButton
   m_TagString: Untagged
@@ -186,11 +185,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7010057, g: 0.8036849, b: 0.8396226, a: 1}
-    m_HighlightedColor: {r: 0.5825027, g: 0.6151823, b: 0.6603774, a: 1}
-    m_PressedColor: {r: 0.4962175, g: 0.5377307, b: 0.5943396, a: 1}
+    m_NormalColor: {r: 0.8773585, g: 0.7641586, b: 0.41798684, a: 1}
+    m_HighlightedColor: {r: 0.745283, g: 0.6749733, b: 0.41131186, a: 1}
+    m_PressedColor: {r: 0.745283, g: 0.6756962, b: 0.5097454, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 0.5019608}
+    m_DisabledColor: {r: 0.8584906, g: 0.81651837, b: 0.75725347, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -259,21 +258,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40865298}
   m_CullTransparentMesh: 1
---- !u!114 &40865303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40865298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.9150943, g: 0.73202944, b: 0.09927912, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &51025532
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +766,7 @@ GameObject:
   - component: {fileID: 305206907}
   - component: {fileID: 305206906}
   m_Layer: 5
-  m_Name: BuildUraniumCost
+  m_Name: BuildNuclearCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1685,7 +1669,7 @@ GameObject:
   - component: {fileID: 771055364}
   - component: {fileID: 771055363}
   m_Layer: 5
-  m_Name: BuildUraniumText
+  m_Name: BuildNuclearText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1820,7 +1804,6 @@ GameObject:
   - component: {fileID: 777079633}
   - component: {fileID: 777079632}
   - component: {fileID: 777079631}
-  - component: {fileID: 777079634}
   m_Layer: 5
   m_Name: BuildUraniumButton
   m_TagString: Untagged
@@ -1871,11 +1854,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7010057, g: 0.8036849, b: 0.8396226, a: 1}
-    m_HighlightedColor: {r: 0.5825027, g: 0.6151823, b: 0.6603774, a: 1}
-    m_PressedColor: {r: 0.4962175, g: 0.5377307, b: 0.5943396, a: 1}
+    m_NormalColor: {r: 0.55268776, g: 0.8679245, b: 0.5549042, a: 1}
+    m_HighlightedColor: {r: 0.5865289, g: 0.7924528, b: 0.5719117, a: 1}
+    m_PressedColor: {r: 0.49803922, g: 0.59607846, b: 0.50365204, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 0.5019608}
+    m_DisabledColor: {r: 0.7197436, g: 0.8396226, b: 0.7168476, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1944,21 +1927,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777079629}
   m_CullTransparentMesh: 1
---- !u!114 &777079634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777079629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.27473998, g: 0.8679245, b: 0.1432894, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &955335704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,9 +2437,8 @@ GameObject:
   - component: {fileID: 1364010429}
   - component: {fileID: 1364010428}
   - component: {fileID: 1364010427}
-  - component: {fileID: 1364010426}
   m_Layer: 5
-  m_Name: BuildPlantButton
+  m_Name: BuildNuclearButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2499,21 +2466,6 @@ RectTransform:
   m_AnchoredPosition: {x: 151, y: 395}
   m_SizeDelta: {x: 241.5706, y: 67.4656}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1364010426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364010424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.7334665, g: 0.5087665, b: 0.9716981, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &1364010427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2535,11 +2487,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.7010057, g: 0.8036849, b: 0.8396226, a: 1}
-    m_HighlightedColor: {r: 0.5825027, g: 0.6151823, b: 0.6603774, a: 1}
-    m_PressedColor: {r: 0.4962175, g: 0.5377307, b: 0.5943396, a: 1}
+    m_NormalColor: {r: 0.73875725, g: 0.616545, b: 0.8018868, a: 1}
+    m_HighlightedColor: {r: 0.63816863, g: 0.5433428, b: 0.6981132, a: 1}
+    m_PressedColor: {r: 0.47461903, g: 0.38425595, b: 0.5188679, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 0.5019608}
+    m_DisabledColor: {r: 0.7851549, g: 0.74012107, b: 0.8301887, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3284,7 +3236,6 @@ GameObject:
   - component: {fileID: 1957443824}
   - component: {fileID: 1957443823}
   - component: {fileID: 1957443822}
-  - component: {fileID: 1957443825}
   m_Layer: 5
   m_Name: BuildMetalButton
   m_TagString: Untagged
@@ -3408,21 +3359,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957443820}
   m_CullTransparentMesh: 1
---- !u!114 &1957443825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957443820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.78221786, g: 0.8867924, b: 0.87568086, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &2024556695
 GameObject:
   m_ObjectHideFlags: 0

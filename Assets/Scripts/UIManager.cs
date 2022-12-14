@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 	public Button buildMetalButton;
 	public Button buildGoldButton;
 	public Button buildUraniumButton;
+	public Button buildNuclearButton;
 
 	// Progress bars and infos
 	public ProgressBar money;
@@ -43,7 +44,7 @@ public class UIManager : MonoBehaviour
 		// Update resource every 1 second
 		gameManager.onUpdateDone += UpdateResource;
 		// Update buttons every 1 second
-		//gameManager.onUpdateDone += UpdateButtons;
+		// gameManager.onUpdateDone += UpdateButtons;
 		// Game over
 		gameManager.onGameOver += GameOver;
 
@@ -136,6 +137,10 @@ public class UIManager : MonoBehaviour
 		TMP_Text uraniumCostTextButton = GameObject.Find("BuildUraniumCost").GetComponent<TMP_Text>();
 		string uraniumCostSetting = gameManager.gameSettings.uraniumMineCost.ToString();
 		uraniumCostTextButton.text = $"-{uraniumCostSetting}$";
+
+		TMP_Text nuclearCostTextButton = GameObject.Find("BuildNuclearCost").GetComponent<TMP_Text>();
+		string nuclearCostSetting = gameManager.gameSettings.nuclearPowerPlantCost.ToString();
+		nuclearCostTextButton.text = $"-{nuclearCostSetting}$";
 
 		// Time
 		time.current = gameManager.timeCount;
