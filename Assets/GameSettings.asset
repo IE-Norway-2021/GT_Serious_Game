@@ -24,8 +24,8 @@ MonoBehaviour:
   rotateSpeed: 8
   angleView: 0
   updateDelay: 1
-  metalMineMoneyProduction: 10
-  metalMineCO2Production: 0
+  metalMineMoneyProduction: 1
+  metalMineCO2Production: 1
   goldMineMoneyProduction: 0
   goldMineCO2Production: 0
   uraniumMineMoneyProduction: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   nuclearPlantCO2Production: 0
   pipelineCO2Production: 0
   treeCO2Decrease: 0
-  metalMineCost: 0
+  metalMineCost: 10
   goldMineCost: 0
   uraniumMineCost: 0
   nuclearPowerPlantCost: 0

@@ -524,7 +524,7 @@ public class GameManager : MonoBehaviour
 					tileStack.gold.tilesObject[0].SetActive(false);
 					tileStack.gold.tilesObject.RemoveAt(0);
 					// Add mine
-					tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.goldMine);
+					tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, -0.4f, tileStack.z, 6), TileType.goldMine);
 					++goldMineCount;
 					moneyCount -= gameSettings.goldMineCost;
 				}
@@ -537,7 +537,7 @@ public class GameManager : MonoBehaviour
 					tileStack.uranium.tilesObject[0].SetActive(false);
 					tileStack.uranium.tilesObject.RemoveAt(0);
 					// Add mine
-					tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.uraniumMine);
+					tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, -0.4f, tileStack.z, 6), TileType.uraniumMine);
 					++uraniumMineCount;
 					moneyCount -= gameSettings.uraniumMineCost;
 				}

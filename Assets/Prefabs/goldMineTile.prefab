@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2985722634282734749}
   - component: {fileID: 4310785115176572711}
   m_Layer: 0
-  m_Name: factory
+  m_Name: goldMineTile
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8876227848698413881}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -160.64566, y: 0, z: -880.7536}
+  m_LocalPosition: {x: -160.64566, y: -0.259, z: -880.7536}
   m_LocalScale: {x: 30.908957, y: 44.583694, z: 22.016172}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4678b274c64e142d9951e9cc3161849d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

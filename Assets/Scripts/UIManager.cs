@@ -13,13 +13,13 @@ public class UIManager : MonoBehaviour
 	public Button selectedButton;
 	public Button removeButton;
 	public Button buildMetalButton;
+	public Button buildGoldButton;
+	public Button buildUraniumButton;
 
 	// Progress bars and infos
 	public ProgressBar money;
 	public float newMoney;
 	public TMP_Text moneyText;
-	public float newCost;
-	public TMP_Text costText;
 
 	public ProgressBar co2;
 	public float newCo2;
@@ -37,6 +37,9 @@ public class UIManager : MonoBehaviour
 		tileOnClick = GameObject.Find("TileOnClickHandler").GetComponent<TileOnClick>();
 		removeButton = GameObject.Find("RemoveButton").GetComponent<Button>();
 		buildMetalButton = GameObject.Find("BuildMetalButton").GetComponent<Button>();
+		buildGoldButton = GameObject.Find("BuildGoldButton").GetComponent<Button>();
+		buildUraniumButton = GameObject.Find("BuildUraniumButton").GetComponent<Button>();
+
 		// Update resource every 1 second
 		gameManager.onUpdateDone += UpdateResource;
 		// Update buttons every 1 second
@@ -55,6 +58,7 @@ public class UIManager : MonoBehaviour
 		// Enable button according to selected tile/object
 		if (tileOnClick.selectedTile != null)
 		{
+
 			TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
 			if (current != null && canRemoveTile(current))
 			{
@@ -68,18 +72,41 @@ public class UIManager : MonoBehaviour
 			}
 			else if (current.metal.exists)
 			{
+				removeButton.interactable = false;
+				buildGoldButton.interactable = false;
+				buildUraniumButton.interactable = false;
 				buildMetalButton.interactable = true;
+			}
+			else if (current.gold.exists)
+			{
+				removeButton.interactable = false;
+				buildMetalButton.interactable = false;
+				buildUraniumButton.interactable = false;
+				buildGoldButton.interactable = true;
+			}
+			else if (current.uranium.exists)
+			{
+				removeButton.interactable = false;
+				buildMetalButton.interactable = false;
+				buildUraniumButton.interactable = true;
+				buildGoldButton.interactable = false;
 			}
 			else
 			{
 				removeButton.interactable = false;
 				buildMetalButton.interactable = false;
+				buildGoldButton.interactable = false;
+				buildUraniumButton.interactable = false;
+
 			}
 		}
 		else
 		{
 			removeButton.interactable = false;
 			buildMetalButton.interactable = false;
+			buildGoldButton.interactable = false;
+			buildUraniumButton.interactable = false;
+
 		}
 	}
 
@@ -101,6 +128,14 @@ public class UIManager : MonoBehaviour
 		TMP_Text metalCostTextButton = GameObject.Find("BuildMetalCost").GetComponent<TMP_Text>();
 		string metalCostSetting = gameManager.gameSettings.metalMineCost.ToString();
 		metalCostTextButton.text = $"-{metalCostSetting}$";
+
+		TMP_Text goldCostTextButton = GameObject.Find("BuildGoldCost").GetComponent<TMP_Text>();
+		string goldCostSetting = gameManager.gameSettings.goldMineCost.ToString();
+		goldCostTextButton.text = $"-{goldCostSetting}$";
+
+		TMP_Text uraniumCostTextButton = GameObject.Find("BuildUraniumCost").GetComponent<TMP_Text>();
+		string uraniumCostSetting = gameManager.gameSettings.uraniumMineCost.ToString();
+		uraniumCostTextButton.text = $"-{uraniumCostSetting}$";
 
 		// Time
 		time.current = gameManager.timeCount;
