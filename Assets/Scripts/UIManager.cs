@@ -98,7 +98,9 @@ public class UIManager : MonoBehaviour
 		co2Text.text = newCo2.ToString();
 
 		// Costs
-		costText = GameObject.Find("Cost").GetComponent<TMP_Text>();
+		TMP_Text metalCostTextButton = GameObject.Find("BuildMetalCost").GetComponent<TMP_Text>();
+		string metalCostSetting = gameManager.gameSettings.metalMineCost.ToString();
+		metalCostTextButton.text = $"-{metalCostSetting}$";
 
 		// Time
 		time.current = gameManager.timeCount;
