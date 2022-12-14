@@ -33,6 +33,7 @@ public class TileStack
 
     // Map position
     public float x;
+    public float y;
     public float z;
 
     // Array position
@@ -60,9 +61,10 @@ public class TileStack
     public Tile pipeline;
     public Tile hotel;
 
-    public TileStack(float x, float z, int xIndex, int zIndex)
+    public TileStack(float x, float y, float z, int xIndex, int zIndex)
     {
         this.x = x;
+        this.y = y;
         this.z = z;
         this.xIndex = xIndex;
         this.zIndex = zIndex;

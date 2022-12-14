@@ -223,8 +223,11 @@ public class GameManager : MonoBehaviour
 	// Generates a random map of TileStacks
 	public void GenerateMap()
 	{
+
 		// Create an list of tile stacks using the dims in the mapData
-		float x = (gameSettings.XLimit / 2) * -TILE_X_DEFAULT, z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
+		float x = (gameSettings.XLimit / 2) * -TILE_X_DEFAULT;
+		float z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
+
 		for (int i = 0; i < gameSettings.XLimit; i++, x += TILE_X_DEFAULT)
 		{
 			tileStacks.Add(new List<TileStack>());
@@ -239,7 +242,7 @@ public class GameManager : MonoBehaviour
 				{
 					decalage = -TILE_X_OFFSET;
 				}
-				tileStacks[i].Add(new TileStack(x + decalage, z, i, j));
+				tileStacks[i].Add(new TileStack(x + decalage, 0, z, i, j));
 			}
 			z = (gameSettings.ZLimit / 2) * -TILE_Z_DEFAULT;
 		}
@@ -352,19 +355,21 @@ public class GameManager : MonoBehaviour
 		{
 			for (int j = 0; j < tileStacks[i].Count; j++)
 			{
-				createTile(tileStacks[i][j].x, tileStacks[i][j].z, tileStacks[i][j]);
+				float y = Mathf.PerlinNoise(i * 0.08f, j * 0.02f);
+				createTile(tileStacks[i][j].x, tileStacks[i][j].y + (y * 8), tileStacks[i][j].z, tileStacks[i][j]);
 			}
 		}
 	}
 
-	private GameObject createTile(float x, float z, TileStack tileStack)
+	private GameObject createTile(float x, float y, float z, TileStack tileStack)
 	{
+
 		//Couche de base
-		tileStack.addTile(InstantiateObject(rockTilePrefab, x, -TILE_HEIGHT_DEFAULT, z, 6), TileType.rock);
+		tileStack.addTile(InstantiateObject(rockTilePrefab, x, y - TILE_HEIGHT_DEFAULT, z, 6), TileType.rock);
 		// stack the tiles depending on the tileStack
 		if (tileStack.water.exists)
 		{
-			GameObject tile = InstantiateObject(waterTilePrefab, x, 0, z, 4);
+			GameObject tile = InstantiateObject(waterTilePrefab, x, TILE_HEIGHT_DEFAULT * 2, z, 4);
 			tileStack.addTile(tile, TileType.water);
 		}
 		else if (tileStack.ground.exists)
@@ -372,21 +377,21 @@ public class GameManager : MonoBehaviour
 			// check if we need to add minerals
 			if (tileStack.metal.exists)
 			{
-				tileStack.addTile(InstantiateObject(metalTilePrefab, x, -0.5f, z, 6), TileType.metal);
+				tileStack.addTile(InstantiateObject(metalTilePrefab, x, y - 0.5f, z, 6), TileType.metal);
 			}
 			else if (tileStack.gold.exists)
 			{
-				tileStack.addTile(InstantiateObject(goldTilePrefab, x, -0.5f, z, 6), TileType.gold);
+				tileStack.addTile(InstantiateObject(goldTilePrefab, x, y - 0.5f, z, 6), TileType.gold);
 			}
 			else if (tileStack.uranium.exists)
 			{
-				tileStack.addTile(InstantiateObject(uraniumTilePrefab, x, -0.5f, z, 6), TileType.uranium);
+				tileStack.addTile(InstantiateObject(uraniumTilePrefab, x, y - 0.5f, z, 6), TileType.uranium);
 			}
 
-			tileStack.addTile(InstantiateObject(groundTilePrefab, x, 0, z, 6), TileType.ground);
+			tileStack.addTile(InstantiateObject(groundTilePrefab, x, y, z, 6), TileType.ground);
 			if (tileStack.grass.exists)
 			{
-				tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT, z, 6), TileType.grass);
+				tileStack.addTile(InstantiateObject(grassTilePrefab, x, y + TILE_HEIGHT_DEFAULT, z, 6), TileType.grass);
 
 				if (tileStack.tree.exists)
 				{
@@ -397,7 +402,7 @@ public class GameManager : MonoBehaviour
 						float xOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
 						float zOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
 						float size = UnityEngine.Random.Range(0.8f, 1.5f);
-						GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, 1.5f, z + zOffset, 6);
+						GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, y + TILE_HEIGHT_DEFAULT + 0.5f, z + zOffset, 6);
 						tree.transform.localScale = new Vector3(size, size, size);
 						tileStack.addTile(tree, TileType.tree);
 						// TODO vérifier pourquoi les arbres ne s'enlèvent pas correctement quand y'en a plusieurs
@@ -465,6 +470,7 @@ public class GameManager : MonoBehaviour
 
 	public void handleAction(TileStack tileStack, UserActionType action)
 	{
+		float aboveRock = tileStack.rock.tilesObject[0].transform.position.y + (TILE_HEIGHT_DEFAULT - 0.4f);
 		switch (action)
 		{
 			case UserActionType.removeTree:
@@ -511,7 +517,7 @@ public class GameManager : MonoBehaviour
 					tileStack.metal.tilesObject[0].SetActive(false);
 					tileStack.metal.tilesObject.RemoveAt(0);
 					// Add mine
-					tileStack.addTile(InstantiateObject(metalMineTilePrefab, tileStack.x, -0.4f, tileStack.z, 6), TileType.metalMine);
+					tileStack.addTile(InstantiateObject(metalMineTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.metalMine);
 					++metalMineCount;
 					moneyCount -= gameSettings.metalMineCost;
 				}
@@ -524,7 +530,7 @@ public class GameManager : MonoBehaviour
 					tileStack.gold.tilesObject[0].SetActive(false);
 					tileStack.gold.tilesObject.RemoveAt(0);
 					// Add mine
-					tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, -0.4f, tileStack.z, 6), TileType.goldMine);
+					tileStack.addTile(InstantiateObject(goldMineTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.goldMine);
 					++goldMineCount;
 					moneyCount -= gameSettings.goldMineCost;
 				}
@@ -537,7 +543,7 @@ public class GameManager : MonoBehaviour
 					tileStack.uranium.tilesObject[0].SetActive(false);
 					tileStack.uranium.tilesObject.RemoveAt(0);
 					// Add mine
-					tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, -0.4f, tileStack.z, 6), TileType.uraniumMine);
+					tileStack.addTile(InstantiateObject(uraniumMineTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.uraniumMine);
 					++uraniumMineCount;
 					moneyCount -= gameSettings.uraniumMineCost;
 				}
