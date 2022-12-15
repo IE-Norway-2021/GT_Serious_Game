@@ -363,12 +363,21 @@ public class GameManager : MonoBehaviour
     private GameObject createTile(float x, float y, float z, TileStack tileStack)
     {
 
+        float delta = y - TILE_HEIGHT_DEFAULT * 2;
+        if (delta < 0) { delta = 0f; }
+        int nbOfDirtTiles = 1;
+        while (delta > TILE_HEIGHT_DEFAULT)
+        {
+            ++nbOfDirtTiles;
+            delta -= TILE_HEIGHT_DEFAULT;
+        }
+
         //Couche de base
-        tileStack.addTile(InstantiateObject(rockTilePrefab, x, y - TILE_HEIGHT_DEFAULT, z, 6), TileType.rock);
+        tileStack.addTile(InstantiateObject(rockTilePrefab, x, 0 + delta, z, 6), TileType.rock);
         // stack the tiles depending on the tileStack
         if (tileStack.water.exists)
         {
-            GameObject tile = InstantiateObject(waterTilePrefab, x, TILE_HEIGHT_DEFAULT * 2, z, 4);
+            GameObject tile = InstantiateObject(waterTilePrefab, x, TILE_HEIGHT_DEFAULT + delta, z, 4);
             tileStack.addTile(tile, TileType.water);
         }
         else if (tileStack.ground.exists)
@@ -376,21 +385,24 @@ public class GameManager : MonoBehaviour
             // check if we need to add minerals
             if (tileStack.metal.exists)
             {
-                tileStack.addTile(InstantiateObject(metalTilePrefab, x, y - 0.5f, z, 6), TileType.metal);
+                tileStack.addTile(InstantiateObject(metalTilePrefab, x, 0.5f + delta, z, 6), TileType.metal);
             }
             else if (tileStack.gold.exists)
             {
-                tileStack.addTile(InstantiateObject(goldTilePrefab, x, y - 0.5f, z, 6), TileType.gold);
+                tileStack.addTile(InstantiateObject(goldTilePrefab, x, 0.5f + delta, z, 6), TileType.gold);
             }
             else if (tileStack.uranium.exists)
             {
-                tileStack.addTile(InstantiateObject(uraniumTilePrefab, x, y - 0.5f, z, 6), TileType.uranium);
+                tileStack.addTile(InstantiateObject(uraniumTilePrefab, x, 0.5f + delta, z, 6), TileType.uranium);
             }
-
-            tileStack.addTile(InstantiateObject(groundTilePrefab, x, y, z, 6), TileType.ground);
+            for (int i = 0; i < nbOfDirtTiles; i++)
+            {
+                float height = TILE_HEIGHT_DEFAULT * (i + 1);
+                tileStack.addTile(InstantiateObject(groundTilePrefab, x, height, z, 6), TileType.ground);
+            }
             if (tileStack.grass.exists)
             {
-                tileStack.addTile(InstantiateObject(grassTilePrefab, x, y + TILE_HEIGHT_DEFAULT, z, 6), TileType.grass);
+                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1, z, 6), TileType.grass);
 
                 if (tileStack.tree.exists)
                 {
@@ -401,10 +413,9 @@ public class GameManager : MonoBehaviour
                         float xOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float zOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float size = UnityEngine.Random.Range(0.8f, 1.5f);
-                        GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, y + TILE_HEIGHT_DEFAULT + 0.5f, z + zOffset, 6);
+                        GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1.5f, z + zOffset, 6);
                         tree.transform.localScale = new Vector3(size, size, size);
                         tileStack.addTile(tree, TileType.tree);
-                        // TODO vérifier pourquoi les arbres ne s'enlèvent pas correctement quand y'en a plusieurs
                     }
                 }
             }
