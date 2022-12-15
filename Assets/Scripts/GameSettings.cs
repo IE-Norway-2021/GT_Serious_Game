@@ -37,6 +37,8 @@ public class GameSettings : ScriptableObject
 
 	public int MineralProbability;
 
+    [Header("Camera Settings")]
+
     public Vector3 zoomMax;
     public Vector3 zoomMin;
     public float rotateSpeed = 8f;
@@ -47,7 +49,6 @@ public class GameSettings : ScriptableObject
 	public float rotateSpeed = 8f;
 	public float angleView;
 
-	[Header("Game Settings")]
 	[Header("Production")]
 	public long updateDelay;
 	public long metalMineMoneyProduction;
