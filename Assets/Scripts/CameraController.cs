@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class CameraController : MonoBehaviour
 {
+
+    public GameSettings gameSettings;
 
     public Transform cameraTransform;
 
@@ -18,9 +22,6 @@ public class CameraController : MonoBehaviour
     public Quaternion newRotation;
 
     public float rotationAmount;
-
-    public Vector3 zoomMax;
-    public Vector3 zoomMin;
 
 
     // mouse movement
@@ -87,13 +88,17 @@ public class CameraController : MonoBehaviour
         // zoom in when mouse rolls up
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            newZoom += zoomAmount;
+            // check if new zoom is within the limits
+            if (newZoom.z + zoomAmount.z < gameSettings.zoomMax.x && newZoom.z + zoomAmount.z > gameSettings.zoomMin.z)
+                newZoom += zoomAmount;
         }
 
         // zoom out when mouse rolls down
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            newZoom -= zoomAmount;
+            // check if new zoom is within the limits
+            if (newZoom.z - zoomAmount.z < gameSettings.zoomMax.x && newZoom.z - zoomAmount.z > gameSettings.zoomMin.z)
+                newZoom -= zoomAmount;
         }
 
         if (Input.GetKey(KeyCode.Q))
