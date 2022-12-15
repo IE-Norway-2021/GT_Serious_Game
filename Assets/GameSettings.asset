@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XLimit: 80
   ZLimit: 80
+  PNxVariation: 0.039
+  PNzVariation: 0.055
+  PNMultiplier: 8.1
   VolcanoRadius: 5
   VolcanoHeight: 10
   IslandRadius: 25
