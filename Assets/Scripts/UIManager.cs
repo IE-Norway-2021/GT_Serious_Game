@@ -64,45 +64,36 @@ public class UIManager : MonoBehaviour
 		// Enable button according to selected tile/object
 		if (tileOnClick.selectedTile != null)
 		{
+			// Disable all buttons
+			removeButton.interactable = false;
+			buildMetalButton.interactable = false;
+			buildGoldButton.interactable = false;
+			buildUraniumButton.interactable = false;
+
 
 			TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
 			if (current != null && canRemoveTile(current))
 			{
 				removeButton.interactable = true;
-
-				if (Input.GetKeyDown(KeyCode.R))
-				{
-					removeTile(current);
-				}
+				if (Input.GetKeyDown(KeyCode.R)) { removeTile(current); }
 
 			}
 			else if (current.metal.exists)
 			{
-				removeButton.interactable = false;
-				buildGoldButton.interactable = false;
-				buildUraniumButton.interactable = false;
 				buildMetalButton.interactable = true;
+				if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildMetalMine); }
+
 			}
 			else if (current.gold.exists)
 			{
-				removeButton.interactable = false;
-				buildMetalButton.interactable = false;
-				buildUraniumButton.interactable = false;
 				buildGoldButton.interactable = true;
+				if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildGoldMine); }
+
 			}
 			else if (current.uranium.exists)
 			{
-				removeButton.interactable = false;
-				buildMetalButton.interactable = false;
 				buildUraniumButton.interactable = true;
-				buildGoldButton.interactable = false;
-			}
-			else
-			{
-				removeButton.interactable = false;
-				buildMetalButton.interactable = false;
-				buildGoldButton.interactable = false;
-				buildUraniumButton.interactable = false;
+				if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildUraniumMine); }
 
 			}
 		}
