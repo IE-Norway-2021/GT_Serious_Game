@@ -44,8 +44,6 @@ public class GameSettings : ScriptableObject
     public float rotateSpeed = 8f;
     public float angleView;
 
-	public float zoomMax;
-	public float zoomMin;
 	public float rotateSpeed = 8f;
 	public float angleView;
 
