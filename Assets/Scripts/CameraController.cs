@@ -89,7 +89,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             // check if new zoom is within the limits
-            if (newZoom.z + zoomAmount.z < gameSettings.zoomMax.x && newZoom.z + zoomAmount.z > gameSettings.zoomMin.z)
+            if (newZoom.z + zoomAmount.z < gameSettings.zoomMax.z && newZoom.y + zoomAmount.y > gameSettings.zoomMax.y)
                 newZoom += zoomAmount;
         }
 
@@ -97,7 +97,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             // check if new zoom is within the limits
-            if (newZoom.z - zoomAmount.z < gameSettings.zoomMax.x && newZoom.z - zoomAmount.z > gameSettings.zoomMin.z)
+            if (newZoom.z - zoomAmount.z > gameSettings.zoomMin.z && newZoom.y - zoomAmount.y < gameSettings.zoomMin.y)
                 newZoom -= zoomAmount;
         }
 

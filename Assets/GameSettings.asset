@@ -23,7 +23,7 @@ MonoBehaviour:
   TreeProbability: 50
   MineralProbability: 50
   zoomMax: {x: 0, y: 10, z: 10}
-  zoomMin: {x: 0, y: 100, z: -80}
+  zoomMin: {x: 0, y: 80, z: -60}
   rotateSpeed: 8
   angleView: 0
   updateDelay: 1
