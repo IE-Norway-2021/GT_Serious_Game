@@ -355,8 +355,10 @@ public class GameManager : MonoBehaviour
 		{
 			for (int j = 0; j < tileStacks[i].Count; j++)
 			{
-				float y = Mathf.PerlinNoise(i * 0.08f, j * 0.02f);
-				createTile(tileStacks[i][j].x, tileStacks[i][j].y + (y * 8), tileStacks[i][j].z, tileStacks[i][j]);
+				float y = Mathf.PerlinNoise(i * gameSettings.PNxVariation, j * gameSettings.PNzVariation);
+				if (tileStacks[i][j].water.exists) { y = 0; }
+				createTile(tileStacks[i][j].x, tileStacks[i][j].y + (y * gameSettings.PNMultiplier), tileStacks[i][j].z, tileStacks[i][j]);
+
 			}
 		}
 	}

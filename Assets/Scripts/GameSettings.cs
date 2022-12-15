@@ -7,69 +7,77 @@ using System;
 public class GameSettings : ScriptableObject
 {
 
-    //
-    // !!!!!!! All dimensions are in tiles and not in map coordinates !!!!!!!
-    //
+	//
+	// !!!!!!! All dimensions are in tiles and not in map coordinates !!!!!!!
+	//
 
-    [Header("Map Dimensions")]
+	[Header("Map Dimensions")]
 
-    // Dimensions of the level
-    public int XLimit;
-    public int ZLimit;
+	// Dimensions of the level
+	public int XLimit;
+	public int ZLimit;
 
-    // The volcano dims
-    public int VolcanoRadius;
-    public int VolcanoHeight;
+	// Pelrin Noise settings
+	[Range(0f, 0.1f)]
+	public float PNxVariation;
+	[Range(0f, 0.1f)]
+	public float PNzVariation;
+	[Range(0f, 10f)]
+	public float PNMultiplier;
 
-    // The island dims
-    public int IslandRadius;
+	// The volcano dims
+	public int VolcanoRadius;
+	public int VolcanoHeight;
 
-    [Header("Map Generation")]
-    public int TreeProbability;
+	// The island dims
+	public int IslandRadius;
 
-    public int MineralProbability;
+	[Header("Map Generation")]
+	public int TreeProbability;
 
-    [Header("Camera Settings")]
+	public int MineralProbability;
 
-    public float zoomMax;
-    public float zoomMin;
-    public float rotateSpeed = 8f;
-    public float angleView;
+	[Header("Camera Settings")]
 
-    [Header("Game Settings")]
-    [Header("Production")]
-    public long updateDelay;
-    public long metalMineMoneyProduction;
-    public long metalMineCO2Production;
-    public long goldMineMoneyProduction;
-    public long goldMineCO2Production;
-    public long uraniumMineMoneyProduction;
-    public long uraniumMineCO2Production;
-    public long nuclearPlantMoneyIncrease;
-    public long nuclearPlantCO2Production;
-    public long pipelineCO2Production;
-    public long treeCO2Decrease;
+	public float zoomMax;
+	public float zoomMin;
+	public float rotateSpeed = 8f;
+	public float angleView;
 
-    [Header("Costs")]
-    public long metalMineCost;
-    public long goldMineCost;
-    public long uraniumMineCost;
-    public long nuclearPowerPlantCost;
-    public long pipelineCost;
-    public long hotelCost;
-    public long treeCost;
-    public long grassCost;
-    public long groundCost;
+	[Header("Game Settings")]
+	[Header("Production")]
+	public long updateDelay;
+	public long metalMineMoneyProduction;
+	public long metalMineCO2Production;
+	public long goldMineMoneyProduction;
+	public long goldMineCO2Production;
+	public long uraniumMineMoneyProduction;
+	public long uraniumMineCO2Production;
+	public long nuclearPlantMoneyIncrease;
+	public long nuclearPlantCO2Production;
+	public long pipelineCO2Production;
+	public long treeCO2Decrease;
 
-    public long goldMineCO2Threshold;
-    public long uraniumMineCO2Threshold;
-    public long nuclearPowerPlantCO2Threshold;
-    public long pipelineCO2Threshold;
+	[Header("Costs")]
+	public long metalMineCost;
+	public long goldMineCost;
+	public long uraniumMineCost;
+	public long nuclearPowerPlantCost;
+	public long pipelineCost;
+	public long hotelCost;
+	public long treeCost;
+	public long grassCost;
+	public long groundCost;
 
-    [Header("Other")]
-    public long startingMoney;
-    public long gameDuration;
-    public long maxCO2;
+	public long goldMineCO2Threshold;
+	public long uraniumMineCO2Threshold;
+	public long nuclearPowerPlantCO2Threshold;
+	public long pipelineCO2Threshold;
+
+	[Header("Other")]
+	public long startingMoney;
+	public long gameDuration;
+	public long maxCO2;
 
 
 }
