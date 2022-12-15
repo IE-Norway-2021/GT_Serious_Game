@@ -44,9 +44,6 @@ public class GameSettings : ScriptableObject
     public float rotateSpeed = 8f;
     public float angleView;
 
-	public float rotateSpeed = 8f;
-	public float angleView;
-
 	[Header("Production")]
 	public long updateDelay;
 	public long metalMineMoneyProduction;
