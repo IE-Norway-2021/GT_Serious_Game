@@ -303,7 +303,24 @@ public class GameManager : MonoBehaviour
                 {
                     tileStacks[i][j].ground.exists = true;
                     tileStacks[i][j].grass.exists = true;
-                    if (UnityEngine.Random.Range(0, 100) < gameSettings.TreeProbability)
+                    TileStack[] neighbours = getNeighbours(tileStacks[i][j]);
+                    int nbOfNeighboursWithTrees = 0;
+                    foreach (TileStack neighbour in neighbours)
+                    {
+                        if (neighbour.tree.exists)
+                        {
+                            ++nbOfNeighboursWithTrees;
+                        }
+                    }
+                    if (nbOfNeighboursWithTrees > 0)
+                    {
+                        if (UnityEngine.Random.Range(0, 100) < gameSettings.TreeProbabilityPerNeighbour * nbOfNeighboursWithTrees)
+                        {
+                            tileStacks[i][j].tree.exists = true;
+                            ++treeCount;
+                        }
+                    }
+                    else if (UnityEngine.Random.Range(0, 100) < gameSettings.TreeProbability)
                     {
                         tileStacks[i][j].tree.exists = true;
                         ++treeCount;
@@ -397,12 +414,12 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < nbOfDirtTiles; i++)
             {
-                float height = TILE_HEIGHT_DEFAULT * (i + 1);
+                float height = TILE_HEIGHT_DEFAULT * (i + 1) + delta;
                 tileStack.addTile(InstantiateObject(groundTilePrefab, x, height, z, 6), TileType.ground);
             }
             if (tileStack.grass.exists)
             {
-                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1, z, 6), TileType.grass);
+                tileStack.addTile(InstantiateObject(grassTilePrefab, x, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1 + delta, z, 6), TileType.grass);
 
                 if (tileStack.tree.exists)
                 {
@@ -413,7 +430,7 @@ public class GameManager : MonoBehaviour
                         float xOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float zOffset = UnityEngine.Random.Range(-0.5f, 0.5f);
                         float size = UnityEngine.Random.Range(0.8f, 1.5f);
-                        GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1.5f, z + zOffset, 6);
+                        GameObject tree = InstantiateObject(treeTilePrefab, x + xOffset, TILE_HEIGHT_DEFAULT * nbOfDirtTiles + 1.5f + delta, z + zOffset, 6);
                         tree.transform.localScale = new Vector3(size, size, size);
                         tileStack.addTile(tree, TileType.tree);
                     }

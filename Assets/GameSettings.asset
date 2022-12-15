@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XLimit: 80
   ZLimit: 80
-  PNxVariation: 0.039
+  PNxVariation: 0.1
   PNzVariation: 0.055
   PNMultiplier: 8.1
   VolcanoRadius: 5
   VolcanoHeight: 10
   IslandRadius: 25
-  TreeProbability: 50
-  MineralProbability: 50
+  TreeProbability: 10
+  TreeProbabilityPerNeighbour: 40
+  MineralProbability: 10
   zoomMax: {x: 0, y: 10, z: 10}
   zoomMin: {x: 0, y: 80, z: -60}
   rotateSpeed: 8
