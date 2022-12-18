@@ -21,36 +21,36 @@ MonoBehaviour:
   VolcanoHeight: 10
   IslandRadius: 25
   TreeProbability: 10
-  TreeProbabilityPerNeighbour: 40
-  MineralProbability: 10
+  TreeProbabilityPerNeighbour: 35
+  MineralProbability: 15
   zoomMax: {x: 0, y: 10, z: 10}
   zoomMin: {x: 0, y: 80, z: -60}
   rotateSpeed: 8
   angleView: 0
   updateDelay: 1
-  metalMineMoneyProduction: 1
-  metalMineCO2Production: 1
-  goldMineMoneyProduction: 10
-  goldMineCO2Production: 10
-  uraniumMineMoneyProduction: 50
-  uraniumMineCO2Production: 50
-  nuclearPlantMoneyIncrease: 100
-  nuclearPlantCO2Production: 100
+  metalMineMoneyProduction: 10
+  metalMineCO2Production: 100
+  goldMineMoneyProduction: 20
+  goldMineCO2Production: 300
+  uraniumMineMoneyProduction: 30
+  uraniumMineCO2Production: 800
+  nuclearPlantMoneyIncrease: 1
+  nuclearPlantCO2Production: 1500
   pipelineCO2Production: 0
-  treeCO2Decrease: 0
-  metalMineCost: 10
-  goldMineCost: 50
-  uraniumMineCost: 100
+  treeCO2Decrease: 2
+  metalMineCost: 100
+  goldMineCost: 200
+  uraniumMineCost: 500
   nuclearPowerPlantCost: 5000
-  pipelineCost: 10000
-  hotelCost: 1000000
+  pipelineCost: 3000
+  hotelCost: 20000
   treeCost: 10
   grassCost: 5
   groundCost: 5
   goldMineCO2Threshold: 0
-  uraniumMineCO2Threshold: 0
-  nuclearPowerPlantCO2Threshold: 0
-  pipelineCO2Threshold: 0
-  startingMoney: 500
-  gameDuration: 300
-  maxCO2: 500
+  uraniumMineCO2Threshold: 5000
+  nuclearPowerPlantCO2Threshold: 10000
+  pipelineCO2Threshold: 100000
+  startingMoney: 600
+  gameDuration: 600
+  maxCO2: 1000000

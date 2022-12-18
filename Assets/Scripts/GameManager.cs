@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
     public long timeCount = 0;
 
     public bool pipelineFinished = false;
+    public bool hotelBuilt;
 
     // Events for the UI
 
@@ -204,11 +205,12 @@ public class GameManager : MonoBehaviour
         // Update the time
         timeCount += gameSettings.updateDelay;
 
-        if (timeCount >= gameSettings.gameDuration || co2Count >= gameSettings.maxCO2)
+        if (timeCount >= gameSettings.gameDuration || co2Count >= gameSettings.maxCO2 || hotelBuilt)
         {
             // Game is over
             CancelInvoke("GameStateUpdate");
             onGameOver?.Invoke();
+            Debug.Log("Game over, you lasted " + timeCount + " seconds, and you had " + moneyCount + " money, producing " + co2Count + " CO2.");
         }
 
         // Update the UI
@@ -327,19 +329,23 @@ public class GameManager : MonoBehaviour
                     }
                     if (UnityEngine.Random.Range(0, 100) < gameSettings.MineralProbability)
                     {
-                        int mineral = UnityEngine.Random.Range(0, 100) % 6;
+                        int mineral = UnityEngine.Random.Range(0, 100) % 10;
                         switch (mineral)
                         {
                             case 0:
                             case 1:
                             case 2:
-                                tileStacks[i][j].metal.exists = true;
-                                break;
                             case 3:
                             case 4:
-                                tileStacks[i][j].gold.exists = true;
+                                tileStacks[i][j].metal.exists = true;
                                 break;
                             case 5:
+                            case 6:
+                            case 7:
+                                tileStacks[i][j].gold.exists = true;
+                                break;
+                            case 8:
+                            case 9:
                                 tileStacks[i][j].uranium.exists = true;
                                 break;
                             default:
@@ -503,7 +509,6 @@ public class GameManager : MonoBehaviour
             case UserActionType.removeTree:
                 if (tileStack.tree.exists)
                 {
-                    Debug.Log("Removing tree, trees : " + tileStack.tree.tilesObject.Count);
                     tileStack.tree.exists = false;
                     // remove all trees on the tile
                     while (tileStack.tree.tilesObject.Count > 0)
@@ -607,6 +612,31 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 break;
+            case UserActionType.buildHotel:
+                // get the tile at map position 0,0
+                TileStack hotelTileStack = null;
+                for (int i = 0; i < tileStacks.Count; ++i)
+                {
+                    for (int j = 0; j < tileStacks[i].Count; ++j)
+                    {
+                        if (tileStacks[i][j].volcano.exists)
+                        {
+                            hotelTileStack = tileStacks[i][j];
+                            break;
+                        }
+                    }
+                    if (hotelTileStack != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (isBuildable(action, hotelTileStack))
+                {
+                    // Idealement, instancier un joli hotel
+                    hotelBuilt = true;
+                }
+                break;
             case UserActionType.none:
             default:
                 return;
@@ -658,6 +688,10 @@ public class GameManager : MonoBehaviour
                 default:
                     return false;
             }
+        }
+        else if (pipelineFinished && actionType == UserActionType.buildHotel)
+        {
+            return true;
         }
         return false;
     }
