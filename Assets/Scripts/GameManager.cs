@@ -588,10 +588,6 @@ public class GameManager : MonoBehaviour
 			case UserActionType.buildNuclearPlant:
 				if (isBuildable(action, tileStack))
 				{
-					// Disable uranium tile
-					tileStack.uranium.exists = false;
-					tileStack.uranium.tilesObject[0].SetActive(false);
-					tileStack.uranium.tilesObject.RemoveAt(0);
 					// Add mine
 					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.nuclearPlant);
 					++nuclearPlantCount;

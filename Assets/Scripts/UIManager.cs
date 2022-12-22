@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
 		buildMetalButton = GameObject.Find("BuildMetalButton").GetComponent<Button>();
 		buildGoldButton = GameObject.Find("BuildGoldButton").GetComponent<Button>();
 		buildUraniumButton = GameObject.Find("BuildUraniumButton").GetComponent<Button>();
+		buildNuclearButton = GameObject.Find("BuildNuclearButton").GetComponent<Button>();
 
 		// Update resource every 1 second
 		gameManager.onUpdateDone += UpdateResource;
@@ -69,6 +70,7 @@ public class UIManager : MonoBehaviour
 			buildMetalButton.interactable = false;
 			buildGoldButton.interactable = false;
 			buildUraniumButton.interactable = false;
+			buildNuclearButton.interactable = false;
 
 
 			TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
@@ -102,6 +104,11 @@ public class UIManager : MonoBehaviour
 					if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildUraniumMine); }
 
 				}
+				else if (computeCostOfBuilding(UserActionType.buildNuclearPlant) <= gameManager.moneyCount)
+				{
+					buildNuclearButton.interactable = true;
+					if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildNuclearPlant); }
+				}
 				// TODO ajouter la logique pour les autres buildings
 			}
 		}
@@ -111,6 +118,7 @@ public class UIManager : MonoBehaviour
 			buildMetalButton.interactable = false;
 			buildGoldButton.interactable = false;
 			buildUraniumButton.interactable = false;
+			buildNuclearButton.interactable = false;
 
 		}
 	}
@@ -216,8 +224,6 @@ public class UIManager : MonoBehaviour
 	{
 		// take the button that was clicked
 		Button selectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-
-
 
 		if (selectedButton.name == "RemoveButton") // remove top tile if possible
 		{
