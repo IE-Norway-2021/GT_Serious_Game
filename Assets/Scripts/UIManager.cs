@@ -80,8 +80,10 @@ public class UIManager : MonoBehaviour
 			TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
 			if (current != null)
 			{
+				// If it's a ground tile...
 				if (canRemoveTile(current))
 				{
+					// We can remove the tile...
 					removeButton.interactable = true;
 					if (Input.GetKeyDown(KeyCode.R))
 					{
@@ -89,15 +91,18 @@ public class UIManager : MonoBehaviour
 						removeButton.interactable = false;
 					}
 
+					// ... or build on it.
 					if (canBuildOnTile(current, UserActionType.buildNuclearPlant) || canBuildOnTile(current, UserActionType.buildPipeline))
 					{
+						// Nuclear Plant
 						if (canBuildOnTile(current, UserActionType.buildNuclearPlant))
 						{
 							buildNuclearButton.interactable = true;
 							if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildNuclearPlant); }
 						}
 
-						if (canBuildOnTile(current, UserActionType.buildPipeline))
+						// Pipeline
+						if (canBuildOnTile(current, UserActionType.buildPipeline) && gameManager.isBuildable(UserActionType.buildPipeline, current))
 						{
 							buildPipelineButton.interactable = true;
 							if (Input.GetKeyDown(KeyCode.C)) { gameManager.handleAction(current, UserActionType.buildPipeline); }
@@ -354,7 +359,7 @@ public class UIManager : MonoBehaviour
 
 	public bool canBuildOnTile(TileStack tileStack, UserActionType actionType)
 	{
-		if (tileStack.ground.exists && !tileStack.tree.exists && !tileStack.grass.exists && !tileStack.metalMine.exists && !tileStack.goldMine.exists && !tileStack.uraniumMine.exists && !tileStack.nuclearPlant.exists && !tileStack.pipeline.exists && !tileStack.hotel.exists && !tileStack.water.exists && !tileStack.volcano.exists && !tileStack.volcanoBorder.exists)
+		if (tileStack.ground.exists && !tileStack.tree.exists && !tileStack.grass.exists && !tileStack.nuclearPlant.exists && !tileStack.pipeline.exists && !tileStack.hotel.exists && !tileStack.water.exists && !tileStack.volcano.exists && !tileStack.volcanoBorder.exists)
 		{
 			// check if player has enough money
 			if (gameManager.moneyCount >= computeCostOfBuilding(actionType))

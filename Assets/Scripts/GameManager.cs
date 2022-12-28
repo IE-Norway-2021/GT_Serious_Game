@@ -588,10 +588,8 @@ public class GameManager : MonoBehaviour
 			case UserActionType.buildNuclearPlant:
 				if (isBuildable(action, tileStack))
 				{
-					// get the last tile of the stack
-					float lastGroundTilePositionY = tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].transform.position.y;
 
-					// Add plant
+					float lastGroundTilePositionY = tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].transform.position.y;
 					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, lastGroundTilePositionY + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.nuclearPlant);
 					++nuclearPlantCount;
 					moneyCount -= gameSettings.nuclearPowerPlantCost;
@@ -600,7 +598,8 @@ public class GameManager : MonoBehaviour
 			case UserActionType.buildPipeline:
 				if (isBuildable(action, tileStack))
 				{
-					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, tileStack.y + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.pipeline);
+					float lastGroundTilePositionY = tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].transform.position.y;
+					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, lastGroundTilePositionY + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.pipeline);
 					++pipelineCount;
 					Debug.Log($"Building pipeline at {tileStack.x}, {tileStack.z}");
 					moneyCount -= gameSettings.pipelineCost;
