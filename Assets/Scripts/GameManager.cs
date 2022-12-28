@@ -588,17 +588,19 @@ public class GameManager : MonoBehaviour
 			case UserActionType.buildNuclearPlant:
 				if (isBuildable(action, tileStack))
 				{
-					// Add mine
-					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.nuclearPlant);
+					// Add plant
+					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.nuclearPlant);
 					++nuclearPlantCount;
 					moneyCount -= gameSettings.nuclearPowerPlantCost;
 				}
 				break;
 			case UserActionType.buildPipeline:
+				Debug.Log($"In action");
 				if (isBuildable(action, tileStack))
 				{
-					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, 0, tileStack.z, 6), TileType.pipeline);
+					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.pipeline);
 					++pipelineCount;
+					Debug.Log($"Building pipeline at {tileStack.x}, {tileStack.z}");
 					moneyCount -= gameSettings.pipelineCost;
 					// Check if there is water nearby
 					TileStack[] neighbours = getNeighbours(tileStack);
@@ -662,6 +664,7 @@ public class GameManager : MonoBehaviour
 				case UserActionType.buildUraniumMine:
 					return tileStack.uranium.exists;
 				case UserActionType.buildNuclearPlant:
+					return true;
 				case UserActionType.buildPipeline:
 					return false;
 				default:
