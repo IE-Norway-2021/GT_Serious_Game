@@ -2585,7 +2585,7 @@ MonoBehaviour:
   goldMineTilePrefab: {fileID: 8876227848698413881, guid: c30ca4c07ac754a05ab365b44924afdc, type: 3}
   uraniumMineTilePrefab: {fileID: 8876227848698413881, guid: cd14ec3e95adf4e34918aa33fdfa3c87, type: 3}
   nuclearPlantTilePrefab: {fileID: 4970891492907203374, guid: 4767038db5b45494a8489601422617bf, type: 3}
-  pipelineTilePrefab: {fileID: 8876227848698413881, guid: 5cca430d0dc8b40a4b0ad601ecee29e9, type: 3}
+  pipelineTilePrefab: {fileID: 5818887280702170626, guid: b10933388724f48678a3d564f20cf6f7, type: 3}
   tileHolder: {fileID: 2119444204}
   tileOnClick: {fileID: 1743254588}
   gameSettings: {fileID: 11400000, guid: f05b54584d568bc4e969bc8a636bad1e, type: 2}
