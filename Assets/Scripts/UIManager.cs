@@ -89,6 +89,21 @@ public class UIManager : MonoBehaviour
 						removeButton.interactable = false;
 					}
 
+					if (canBuildOnTile(current, UserActionType.buildNuclearPlant) || canBuildOnTile(current, UserActionType.buildPipeline))
+					{
+						if (canBuildOnTile(current, UserActionType.buildNuclearPlant))
+						{
+							buildNuclearButton.interactable = true;
+							if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildNuclearPlant); }
+						}
+
+						if (canBuildOnTile(current, UserActionType.buildPipeline))
+						{
+							buildPipelineButton.interactable = true;
+							if (Input.GetKeyDown(KeyCode.C)) { gameManager.handleAction(current, UserActionType.buildPipeline); }
+						}
+					}
+
 				}
 				else if (current.metal.exists && computeCostOfBuilding(UserActionType.buildMetalMine) <= gameManager.moneyCount)
 				{
@@ -107,20 +122,6 @@ public class UIManager : MonoBehaviour
 					buildUraniumButton.interactable = true;
 					if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildUraniumMine); }
 
-				}
-				else if (canBuildOnTile(current, UserActionType.buildNuclearPlant) || canBuildOnTile(current, UserActionType.buildPipeline))
-				{
-					if (canBuildOnTile(current, UserActionType.buildNuclearPlant))
-					{
-						buildNuclearButton.interactable = true;
-						if (Input.GetKeyDown(KeyCode.F)) { gameManager.handleAction(current, UserActionType.buildNuclearPlant); }
-					}
-
-					if (canBuildOnTile(current, UserActionType.buildPipeline))
-					{
-						buildPipelineButton.interactable = true;
-						if (Input.GetKeyDown(KeyCode.C)) { gameManager.handleAction(current, UserActionType.buildPipeline); }
-					}
 				}
 				else
 				{
@@ -353,12 +354,11 @@ public class UIManager : MonoBehaviour
 
 	public bool canBuildOnTile(TileStack tileStack, UserActionType actionType)
 	{
-		if (tileStack.rock.exists && !tileStack.ground.exists && !tileStack.tree.exists && !tileStack.grass.exists && !tileStack.metalMine.exists && !tileStack.goldMine.exists && !tileStack.uraniumMine.exists && !tileStack.nuclearPlant.exists && !tileStack.pipeline.exists && !tileStack.hotel.exists && !tileStack.water.exists && !tileStack.volcano.exists && !tileStack.volcanoBorder.exists)
+		if (tileStack.ground.exists && !tileStack.tree.exists && !tileStack.grass.exists && !tileStack.metalMine.exists && !tileStack.goldMine.exists && !tileStack.uraniumMine.exists && !tileStack.nuclearPlant.exists && !tileStack.pipeline.exists && !tileStack.hotel.exists && !tileStack.water.exists && !tileStack.volcano.exists && !tileStack.volcanoBorder.exists)
 		{
 			// check if player has enough money
 			if (gameManager.moneyCount >= computeCostOfBuilding(actionType))
 			{
-				Debug.Log($"Can build {actionType}");
 				return true;
 			}
 		}

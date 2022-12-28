@@ -588,17 +588,19 @@ public class GameManager : MonoBehaviour
 			case UserActionType.buildNuclearPlant:
 				if (isBuildable(action, tileStack))
 				{
+					// get the last tile of the stack
+					float lastGroundTilePositionY = tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].transform.position.y;
+
 					// Add plant
-					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.nuclearPlant);
+					tileStack.addTile(InstantiateObject(nuclearPlantTilePrefab, tileStack.x, lastGroundTilePositionY + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.nuclearPlant);
 					++nuclearPlantCount;
 					moneyCount -= gameSettings.nuclearPowerPlantCost;
 				}
 				break;
 			case UserActionType.buildPipeline:
-				Debug.Log($"In action");
 				if (isBuildable(action, tileStack))
 				{
-					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, aboveRock, tileStack.z, 6), TileType.pipeline);
+					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, tileStack.y + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.pipeline);
 					++pipelineCount;
 					Debug.Log($"Building pipeline at {tileStack.x}, {tileStack.z}");
 					moneyCount -= gameSettings.pipelineCost;
@@ -664,7 +666,7 @@ public class GameManager : MonoBehaviour
 				case UserActionType.buildUraniumMine:
 					return tileStack.uranium.exists;
 				case UserActionType.buildNuclearPlant:
-					return true;
+					return false;
 				case UserActionType.buildPipeline:
 					return false;
 				default:
