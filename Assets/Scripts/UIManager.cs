@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
 	// Buttons
 	public Button selectedButton;
 	public Button removeButton;
+	public Button digButton;
+
 	public Button buildMetalButton;
 	public Button buildGoldButton;
 	public Button buildUraniumButton;
@@ -44,6 +46,7 @@ public class UIManager : MonoBehaviour
 		buildUraniumButton = GameObject.Find("BuildUraniumButton").GetComponent<Button>();
 		buildNuclearButton = GameObject.Find("BuildNuclearButton").GetComponent<Button>();
 		buildPipelineButton = GameObject.Find("BuildPipelineButton").GetComponent<Button>();
+		digButton = GameObject.Find("DigButton").GetComponent<Button>();
 
 		// Update resource every 1 second
 		gameManager.onUpdateDone += UpdateResource;
@@ -85,10 +88,20 @@ public class UIManager : MonoBehaviour
 				{
 					// We can remove the tile...
 					removeButton.interactable = true;
+					digButton.interactable = true;
 					if (Input.GetKeyDown(KeyCode.R))
 					{
 						removeTile(current);
 						removeButton.interactable = false;
+						digButton.interactable = false;
+
+					}
+					if (Input.GetKeyDown(KeyCode.T))
+					{
+						gameManager.handleAction(current, UserActionType.dig);
+						removeButton.interactable = false;
+						digButton.interactable = false;
+
 					}
 
 					// ... or build on it.
@@ -143,6 +156,7 @@ public class UIManager : MonoBehaviour
 	private void disableAllButtons()
 	{
 		removeButton.interactable = false;
+		digButton.interactable = false;
 		buildMetalButton.interactable = false;
 		buildGoldButton.interactable = false;
 		buildUraniumButton.interactable = false;
@@ -163,6 +177,22 @@ public class UIManager : MonoBehaviour
 		co2Text.text = newCo2.ToString();
 
 		// Costs
+		TMP_Text removeCostTextButton = GameObject.Find("RemoveCost").GetComponent<TMP_Text>();
+		string removeCostSetting = "0";
+		if (tileOnClick.selectedTile != null)
+		{
+			TileStack currentTilestack = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
+			if (currentTilestack != null)
+			{
+				removeCostSetting = computeCostOfRemoval(currentTilestack).ToString();
+			}
+		}
+		removeCostTextButton.text = $"-{removeCostSetting}$";
+
+		TMP_Text digCostTextButton = GameObject.Find("DigCost").GetComponent<TMP_Text>();
+		string digCostSetting = gameManager.gameSettings.digCost.ToString();
+		digCostTextButton.text = $"-{digCostSetting}$";
+
 		TMP_Text metalCostTextButton = GameObject.Find("BuildMetalCost").GetComponent<TMP_Text>();
 		string metalCostSetting = gameManager.gameSettings.metalMineCost.ToString();
 		metalCostTextButton.text = $"-{metalCostSetting}$";
@@ -262,6 +292,15 @@ public class UIManager : MonoBehaviour
 			if (canRemoveTile(current))
 			{
 				removeTile(current);
+			}
+		}
+
+		if (selectedButton.name == "DigButton") // remove top tile if possible
+		{
+			TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
+			if (canRemoveTile(current))
+			{
+				gameManager.handleAction(current, UserActionType.dig);
 			}
 		}
 

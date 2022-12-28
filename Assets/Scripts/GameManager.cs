@@ -43,6 +43,7 @@ public enum UserActionType
 	buildNuclearPlant = 7,
 	buildPipeline = 8,
 	buildHotel = 9,
+	dig = 10,
 };
 
 public enum GameState
@@ -601,7 +602,6 @@ public class GameManager : MonoBehaviour
 					float lastGroundTilePositionY = tileStack.ground.tilesObject[tileStack.ground.tilesObject.Count - 1].transform.position.y;
 					tileStack.addTile(InstantiateObject(pipelineTilePrefab, tileStack.x, lastGroundTilePositionY + (TILE_HEIGHT_DEFAULT / 2), tileStack.z, 6), TileType.pipeline);
 					++pipelineCount;
-					Debug.Log($"Building pipeline at {tileStack.x}, {tileStack.z}");
 					moneyCount -= gameSettings.pipelineCost;
 					// Check if there is water nearby
 					TileStack[] neighbours = getNeighbours(tileStack);
@@ -640,6 +640,16 @@ public class GameManager : MonoBehaviour
 					hotelBuilt = true;
 				}
 				break;
+			case UserActionType.dig:
+				handleAction(tileStack, UserActionType.removeTree);
+				handleAction(tileStack, UserActionType.removeGrass);
+				while (tileStack.ground.tilesObject.Count > 0)
+				{
+					handleAction(tileStack, UserActionType.removeGround);
+				}
+				break;
+
+
 			case UserActionType.none:
 			default:
 				return;

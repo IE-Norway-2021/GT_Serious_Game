@@ -69,6 +69,7 @@ public class GameSettings : ScriptableObject
     public long treeCost;
     public long grassCost;
     public long groundCost;
+    public long digCost;
 
     public long goldMineCO2Threshold;
     public long uraniumMineCO2Threshold;
