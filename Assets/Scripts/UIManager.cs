@@ -92,6 +92,7 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.R))
                     {
                         removeTile(current);
+                        UpdateResource();
                         removeButton.interactable = false;
                         digButton.interactable = false;
 
@@ -99,6 +100,7 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.T))
                     {
                         gameManager.handleAction(current, UserActionType.dig);
+                        UpdateResource();
                         removeButton.interactable = false;
                         digButton.interactable = false;
 
@@ -111,6 +113,7 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         gameManager.handleAction(current, UserActionType.buildMetalMine);
+                        UpdateResource();
                         disableAllButtons();
                     }
                 }
@@ -120,6 +123,7 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         gameManager.handleAction(current, UserActionType.buildGoldMine);
+                        UpdateResource();
                         disableAllButtons();
                     }
                 }
@@ -129,6 +133,7 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.F))
                     {
                         gameManager.handleAction(current, UserActionType.buildUraniumMine);
+                        UpdateResource();
                         disableAllButtons();
                     }
                 }
@@ -147,6 +152,7 @@ public class UIManager : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.F))
                         {
                             gameManager.handleAction(current, UserActionType.buildNuclearPlant);
+                            UpdateResource();
                             disableAllButtons();
                         }
                     }
@@ -158,6 +164,7 @@ public class UIManager : MonoBehaviour
                         if (Input.GetKeyDown(KeyCode.C))
                         {
                             gameManager.handleAction(current, UserActionType.buildPipeline);
+                            UpdateResource();
                             disableAllButtons();
                         }
                     }
@@ -168,6 +175,66 @@ public class UIManager : MonoBehaviour
         {
             disableAllButtons();
         }
+
+        // Costs
+        TMP_Text removeCostTextButton = GameObject.Find("RemoveCost").GetComponent<TMP_Text>();
+        string removeCostSetting = "0";
+        if (tileOnClick.selectedTile != null)
+        {
+            TileStack currentTilestack = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
+            if (currentTilestack != null)
+            {
+                removeCostSetting = computeCostOfRemoval(currentTilestack).ToString();
+            }
+        }
+        removeCostTextButton.text = $"-{removeCostSetting}$";
+
+        TMP_Text digCostTextButton = GameObject.Find("DigCost").GetComponent<TMP_Text>();
+        long digCost = 0;
+        if (tileOnClick.selectedTile != null)
+        {
+            TileStack currentTilestack = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
+            if (currentTilestack != null)
+            {
+                // if there are trees 
+                if (currentTilestack.tree.exists)
+                {
+                    digCost += gameManager.gameSettings.treeCost;
+                }
+                // if there is grass
+                if (currentTilestack.grass.exists)
+                {
+                    digCost += gameManager.gameSettings.grassCost;
+                }
+                // if there is ground
+                if (currentTilestack.ground.exists)
+                {
+                    digCost += gameManager.gameSettings.groundCost * currentTilestack.ground.tilesObject.Count;
+                }
+            }
+        }
+        string digCostSetting = digCost.ToString();
+        digCostTextButton.text = $"-{digCostSetting}$";
+
+        TMP_Text metalCostTextButton = GameObject.Find("BuildMetalCost").GetComponent<TMP_Text>();
+        string metalCostSetting = gameManager.gameSettings.metalMineCost.ToString();
+        metalCostTextButton.text = $"-{metalCostSetting}$";
+
+        TMP_Text goldCostTextButton = GameObject.Find("BuildGoldCost").GetComponent<TMP_Text>();
+        string goldCostSetting = gameManager.gameSettings.goldMineCost.ToString();
+        goldCostTextButton.text = $"-{goldCostSetting}$";
+
+        TMP_Text uraniumCostTextButton = GameObject.Find("BuildUraniumCost").GetComponent<TMP_Text>();
+        string uraniumCostSetting = gameManager.gameSettings.uraniumMineCost.ToString();
+        uraniumCostTextButton.text = $"-{uraniumCostSetting}$";
+
+        TMP_Text nuclearCostTextButton = GameObject.Find("BuildNuclearCost").GetComponent<TMP_Text>();
+        string nuclearCostSetting = gameManager.gameSettings.nuclearPowerPlantCost.ToString();
+        nuclearCostTextButton.text = $"-{nuclearCostSetting}$";
+
+        TMP_Text pipelineCostTextButton = GameObject.Find("BuildPipelineCost").GetComponent<TMP_Text>();
+        string pipelineCostSetting = gameManager.gameSettings.pipelineCost.ToString();
+        pipelineCostTextButton.text = $"-{pipelineCostSetting}$";
     }
 
     private void disableAllButtons()
@@ -192,43 +259,6 @@ public class UIManager : MonoBehaviour
         newCo2 = gameManager.co2Count;
         co2.current = newCo2;
         co2Text.text = newCo2.ToString();
-
-        // Costs
-        TMP_Text removeCostTextButton = GameObject.Find("RemoveCost").GetComponent<TMP_Text>();
-        string removeCostSetting = "0";
-        if (tileOnClick.selectedTile != null)
-        {
-            TileStack currentTilestack = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
-            if (currentTilestack != null)
-            {
-                removeCostSetting = computeCostOfRemoval(currentTilestack).ToString();
-            }
-        }
-        removeCostTextButton.text = $"-{removeCostSetting}$";
-
-        TMP_Text digCostTextButton = GameObject.Find("DigCost").GetComponent<TMP_Text>();
-        string digCostSetting = gameManager.gameSettings.digCost.ToString();
-        digCostTextButton.text = $"-{digCostSetting}$";
-
-        TMP_Text metalCostTextButton = GameObject.Find("BuildMetalCost").GetComponent<TMP_Text>();
-        string metalCostSetting = gameManager.gameSettings.metalMineCost.ToString();
-        metalCostTextButton.text = $"-{metalCostSetting}$";
-
-        TMP_Text goldCostTextButton = GameObject.Find("BuildGoldCost").GetComponent<TMP_Text>();
-        string goldCostSetting = gameManager.gameSettings.goldMineCost.ToString();
-        goldCostTextButton.text = $"-{goldCostSetting}$";
-
-        TMP_Text uraniumCostTextButton = GameObject.Find("BuildUraniumCost").GetComponent<TMP_Text>();
-        string uraniumCostSetting = gameManager.gameSettings.uraniumMineCost.ToString();
-        uraniumCostTextButton.text = $"-{uraniumCostSetting}$";
-
-        TMP_Text nuclearCostTextButton = GameObject.Find("BuildNuclearCost").GetComponent<TMP_Text>();
-        string nuclearCostSetting = gameManager.gameSettings.nuclearPowerPlantCost.ToString();
-        nuclearCostTextButton.text = $"-{nuclearCostSetting}$";
-
-        TMP_Text pipelineCostTextButton = GameObject.Find("BuildPipelineCost").GetComponent<TMP_Text>();
-        string pipelineCostSetting = gameManager.gameSettings.pipelineCost.ToString();
-        pipelineCostTextButton.text = $"-{pipelineCostSetting}$";
 
         // Time
         time.current = gameManager.timeCount;
@@ -318,6 +348,7 @@ public class UIManager : MonoBehaviour
             if (canRemoveTile(current))
             {
                 gameManager.handleAction(current, UserActionType.dig);
+                UpdateResource();
             }
         }
 
@@ -325,36 +356,42 @@ public class UIManager : MonoBehaviour
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildMetalMine);
+            UpdateResource();
         }
 
         if (selectedButton.name == "BuildGoldButton") // Build correct building if possible
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildGoldMine);
+            UpdateResource();
         }
 
         if (selectedButton.name == "BuildUraniumButton") // Build correct building if possible
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildUraniumMine);
+            UpdateResource();
         }
 
         if (selectedButton.name == "BuildNuclearButton") // Build correct building if possible
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildNuclearPlant);
+            UpdateResource();
         }
 
         if (selectedButton.name == "BuildPipelineButton") // Build correct building if possible
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildPipeline);
+            UpdateResource();
         }
 
         if (selectedButton.name == "BuildHotelButton") // Build correct building if possible
         {
             TileStack current = gameManager.getTileStackFromPosition(tileOnClick.selectedTile.transform.position);
             gameManager.handleAction(current, UserActionType.buildHotel);
+            UpdateResource();
         }
 
         tileOnClick.selectedTile = null;
@@ -420,7 +457,33 @@ public class UIManager : MonoBehaviour
             // check if player has enough money
             if (gameManager.moneyCount >= computeCostOfBuilding(actionType))
             {
-                return true;
+                switch (actionType)
+                {
+                    case UserActionType.buildUraniumMine:
+                        // check if co2 is high enough
+                        if (gameManager.co2Count < gameManager.gameSettings.uraniumMineCO2Threshold)
+                        {
+                            return false;
+                        }
+                        break;
+                    case UserActionType.buildNuclearPlant:
+                        // check if co2 is high enough
+                        if (gameManager.co2Count < gameManager.gameSettings.nuclearPowerPlantCO2Threshold)
+                        {
+                            return false;
+                        }
+                        break;
+                    case UserActionType.buildPipeline:
+                        // check if co2 is high enough
+                        if (gameManager.co2Count < gameManager.gameSettings.pipelineCO2Threshold)
+                        {
+                            return false;
+                        }
+                        break;
+                    default:
+                        return true;
+                }
+                return false;
             }
         }
         return false;

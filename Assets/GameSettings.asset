@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e27fbba9c2190418070a1b34bd176c, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  XLimit: 40
-  ZLimit: 40
+  XLimit: 50
+  ZLimit: 50
   PNxVariation: 0.1
   PNzVariation: 0.055
   PNMultiplier: 8.1
-  VolcanoRadius: 4
+  VolcanoRadius: 6
   VolcanoHeight: 10
-  IslandRadius: 10
-  TreeProbability: 10
-  TreeProbabilityPerNeighbour: 35
+  IslandRadius: 15
+  TreeProbability: 13
+  TreeProbabilityPerNeighbour: 27
   MineralProbability: 15
   zoomMax: {x: 0, y: 10, z: 10}
   zoomMin: {x: 0, y: 80, z: -60}
@@ -30,10 +30,10 @@ MonoBehaviour:
   updateDelay: 1
   metalMineMoneyProduction: 10
   metalMineCO2Production: 100
-  goldMineMoneyProduction: 100
-  goldMineCO2Production: 300
+  goldMineMoneyProduction: 20
+  goldMineCO2Production: 200
   uraniumMineMoneyProduction: 30
-  uraniumMineCO2Production: 800
+  uraniumMineCO2Production: 500
   nuclearPlantMoneyIncrease: 1
   nuclearPlantCO2Production: 1500
   pipelineCO2Production: 0
@@ -52,6 +52,6 @@ MonoBehaviour:
   uraniumMineCO2Threshold: 5000
   nuclearPowerPlantCO2Threshold: 10000
   pipelineCO2Threshold: 100000
-  startingMoney: 300
-  gameDuration: 600
+  startingMoney: 350
+  gameDuration: 300
   maxCO2: 1000000

@@ -782,21 +782,21 @@ public class GameManager : MonoBehaviour
         int z = tileStack.zIndex;
         if (x % 2 == 0)
         {
-            neighbours[0] = tileStacks[x - 1][z];
-            neighbours[1] = tileStacks[x - 1][z + 1];
-            neighbours[2] = tileStacks[x][z + 1];
-            neighbours[3] = tileStacks[x + 1][z];
-            neighbours[4] = tileStacks[x][z - 1];
-            neighbours[5] = tileStacks[x - 1][z - 1];
+            neighbours[0] = tileStacks[x + 1][z];
+            neighbours[1] = tileStacks[x - 1][z];
+            neighbours[2] = tileStacks[x - 1][z - 1];
+            neighbours[3] = tileStacks[x][z - 1];
+            neighbours[4] = tileStacks[x - 1][z + 1];
+            neighbours[5] = tileStacks[x][z + 1];
         }
         else
         {
-            neighbours[0] = tileStacks[x - 1][z];
-            neighbours[1] = tileStacks[x][z + 1];
-            neighbours[2] = tileStacks[x + 1][z + 1];
-            neighbours[3] = tileStacks[x + 1][z];
-            neighbours[4] = tileStacks[x + 1][z - 1];
-            neighbours[5] = tileStacks[x][z - 1];
+            neighbours[0] = tileStacks[x + 1][z];
+            neighbours[1] = tileStacks[x - 1][z];
+            neighbours[2] = tileStacks[x][z - 1];
+            neighbours[3] = tileStacks[x + 1][z - 1];
+            neighbours[4] = tileStacks[x][z + 1];
+            neighbours[5] = tileStacks[x - 1][z + 1];
         }
         // display the neighbours in the console
         Debug.Log("Current : " + tileStack + ", 1 : " + neighbours[0] + ", 2 : " + neighbours[1] + ", 3 : " + neighbours[2] + ", 4 : " + neighbours[3] + ", 5 : " + neighbours[4] + ", 6 : " + neighbours[5]);

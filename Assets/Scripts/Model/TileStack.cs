@@ -10,6 +10,7 @@ public class Tile
 {
     public bool exists;
     public List<GameObject> tilesObject;
+    public bool isTree = false;
 
     public Tile()
     {
@@ -22,7 +23,18 @@ public class Tile
         // Highlights only the highest tile
         if (tilesObject.Count > 0)
         {
-            tilesObject[tilesObject.Count - 1].GetComponent<Outline>().enabled = true;
+            if (isTree)
+            {
+                // Highlight all trees
+                foreach (GameObject tree in tilesObject)
+                {
+                    tree.GetComponent<Outline>().enabled = true;
+                }
+            }
+            else
+            {
+                tilesObject[tilesObject.Count - 1].GetComponent<Outline>().enabled = true;
+            }
         }
     }
 }
@@ -71,6 +83,7 @@ public class TileStack
         // instantiate every Tile
         water = new Tile();
         tree = new Tile();
+        tree.isTree = true;
         grass = new Tile();
         building = new Tile();
         ground = new Tile();
@@ -156,7 +169,7 @@ public class TileStack
 
     public override string ToString()
     {
-        string result = "TileStack: " + x + " " + y + " " + z + " " + xIndex + " " + zIndex + " ";
+        string result = "TileStack: x:" + xIndex + ", z:" + zIndex + " ";
         return result;
     }
 }
