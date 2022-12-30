@@ -156,10 +156,7 @@ public class TileStack
 
     public override string ToString()
     {
-        if (water.exists)
-        {
-            return "This is some good water";
-        }
-        return "No water";
+        string result = "TileStack: " + x + " " + y + " " + z + " " + xIndex + " " + zIndex + " ";
+        return result;
     }
 }
