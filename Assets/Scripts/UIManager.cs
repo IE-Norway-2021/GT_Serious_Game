@@ -459,13 +459,6 @@ public class UIManager : MonoBehaviour
             {
                 switch (actionType)
                 {
-                    case UserActionType.buildUraniumMine:
-                        // check if co2 is high enough
-                        if (gameManager.co2Count < gameManager.gameSettings.uraniumMineCO2Threshold)
-                        {
-                            return false;
-                        }
-                        break;
                     case UserActionType.buildNuclearPlant:
                         // check if co2 is high enough
                         if (gameManager.co2Count < gameManager.gameSettings.nuclearPowerPlantCO2Threshold)
@@ -483,7 +476,7 @@ public class UIManager : MonoBehaviour
                     default:
                         return true;
                 }
-                return false;
+                return true;
             }
         }
         return false;

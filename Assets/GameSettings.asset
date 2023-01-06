@@ -52,6 +52,6 @@ MonoBehaviour:
   uraniumMineCO2Threshold: 5000
   nuclearPowerPlantCO2Threshold: 10000
   pipelineCO2Threshold: 100000
-  startingMoney: 350
+  startingMoney: 400
   gameDuration: 300
   maxCO2: 1000000
