@@ -215,6 +215,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("time", (int)timeCount);
             // TODO : a modifier une fois la prefab de l'hotel et le bouton de construction de l'hotel fait
             PlayerPrefs.SetInt("hotelBuilt", pipelineFinished ? 1 : 0);
+            PlayerPrefs.SetInt("pipelineFinished", pipelineFinished ? 1 : 0);
+            PlayerPrefs.SetInt("maxCo2", co2Count >= gameSettings.maxCO2 ? 1 : 0);
+            PlayerPrefs.SetInt("maxTime", timeCount >= gameSettings.gameDuration ? 1 : 0);
 
             ChangeScene.LoadScene("EndScene");
         }
